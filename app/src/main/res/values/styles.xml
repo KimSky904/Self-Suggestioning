@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CustomBtnEllipse" parent="Widget.AppCompat.Button">
+        <item name="background">@drawable/background_btn_ellipse</item>
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">@font/noto_sans_kr_medium</item>
+        <item name="android:textSize">13sp</item>
+        <item name="height">50dp</item>
+    </style>
+</resources>
