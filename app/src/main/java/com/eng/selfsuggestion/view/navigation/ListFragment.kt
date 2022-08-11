@@ -8,8 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
 import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentPagerAdapter
 import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager.widget.ViewPager.OnPageChangeListener
@@ -25,7 +23,6 @@ class ListFragment : Fragment() {
     private lateinit var _binding : FragmentListBinding
     private var indicatorWidth : Int = 0
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
     }
@@ -36,57 +33,31 @@ class ListFragment : Fragment() {
     ): View? {
         _binding = FragmentListBinding.inflate(inflater, container, false)
 
-        val adapter = TabFragmentAdapter(requireFragmentManager())
+        val adapter = activity?.let { ViewPagerAdapter(it) }
         _binding.viewPager.adapter = adapter
-        _binding.tabLayout.setupWithViewPager(_binding.viewPager)
-
-        _binding.tabLayout.post {
-            indicatorWidth = _binding.tabLayout.width / _binding.tabLayout.tabCount
-
-            val indicatorParams: FrameLayout.LayoutParams =
-                _binding.indicator.layoutParams as FrameLayout.LayoutParams
-            indicatorParams.width = indicatorWidth
-            _binding.indicator.layoutParams = indicatorParams
-        }
-
-        _binding.viewPager.addOnPageChangeListener(object : OnPageChangeListener {
-            override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
-            ) {
-                val params : FrameLayout.LayoutParams = _binding.indicator.layoutParams as FrameLayout.LayoutParams
-                val translationOffset = (position + positionOffset) * indicatorWidth
-                params.leftMargin = translationOffset.toInt()
-                _binding.indicator.layoutParams = params
+        _binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
+            override fun onTabSelected(tab: TabLayout.Tab?) {}
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
+            override fun onTabReselected(tab: TabLayout.Tab?) {
+                _binding.viewPager.currentItem = tab!!.position
             }
-
-            override fun onPageSelected(position: Int) {}
-            override fun onPageScrollStateChanged(state: Int) {}
-
         })
-
 
         return _binding.root
     }
 }
 
-private class TabFragmentAdapter (
-    fragmentManager : FragmentManager
-) : FragmentPagerAdapter(fragmentManager) {
+private class ViewPagerAdapter(
+    fragment : FragmentActivity
+) : FragmentStateAdapter(fragment) {
+    override fun getItemCount(): Int = 2
 
-    private var arrayList : ArrayList<Fragment> = ArrayList()
-    init {
-        arrayList.add(DailySpellFragment())
-        arrayList.add(SpecialSpellFragment())
-    }
-
-    override fun getCount(): Int {
-        return arrayList.size
-    }
-
-    override fun getItem(position: Int): Fragment {
-        return arrayList[position]
+    override fun createFragment(position: Int): Fragment {
+        return when(position) {
+            0 -> DailySpellFragment()
+            1 -> SpecialSpellFragment()
+            else -> DailySpellFragment()
+        }
     }
 
 }
