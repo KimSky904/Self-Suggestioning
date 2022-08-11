@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Ssuggestioning">
         <activity
+            android:name=".view.navigation.BaseActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.login.SplashActivity"
             android:exported="false" />
         <activity
