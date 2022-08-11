@@ -8,7 +8,7 @@
 
     <!-- custom colors -->
     <color name="white">#FFFFFFFF</color>
-    <color name="BG">#FFFFFFFF</color>
+    <color name="BG">#EDEDED</color>
     <color name="light_gray">#D6D6D6</color>
     <color name="gray">#868686</color>
     <color name="black">#1E1E1E</color>
