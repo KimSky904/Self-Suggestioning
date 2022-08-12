@@ -21,12 +21,12 @@ class SplashActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        val currunt = auth.currentUser
 
-        if (currunt == null){ // check user
+        if (auth.currentUser == null){ // check user
             // haven't auth
             signInAnonymously()
         }
+        Log.i(TAG, "onStart: currentUser"+auth.uid)
     }
 
     // create user anonymously
@@ -36,7 +36,7 @@ class SplashActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInAnonymously:success")
-                    val user = auth.currentUser
+                    val current = auth.currentUser
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInAnonymously:failure", task.exception)

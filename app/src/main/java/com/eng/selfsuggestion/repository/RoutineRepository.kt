@@ -1,5 +1,6 @@
 package com.eng.selfsuggestion.repository
 
+import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.util.Log
 import com.eng.selfsuggestion.model.RoutineModel
@@ -8,14 +9,19 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import java.util.HashMap
 
 object RoutineRepository {
+    @SuppressLint("StaticFieldLeak")
     val db = FirebaseFirestore.getInstance()
     val auth = Firebase.auth
 
     // create routine
-    suspend fun createRoutine(data : RoutineModel){
-
+    suspend fun createRoutine(data : HashMap<String, Comparable<Any>>){
+        auth.uid?.let {
+            db.collection("routine").document(it).collection("users").document()
+                .set(data)
+        }
     }
 
     // get all routines array
@@ -33,7 +39,7 @@ object RoutineRepository {
                             routines.add(RoutineModel(
                                 doc["content"] as String?,
                                 doc["count"] as Int,
-                                listOf(doc.get("keywords")) as List<String?>,
+                                listOf<String?>(doc.get("keywords") as String?),
                                 doc["timestamp"] as Timestamp,
                                 doc.id
                             ))

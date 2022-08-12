@@ -37,7 +37,21 @@ object SendingRepository {
         return sendings
     }
 
+    // get random sendings : return random elements list
+    suspend fun getRandomSending(numOfList:Int): List<SendingModel> {
+        val list = getSendings()
+
+        val randomList = list.asSequence().shuffled().take(numOfList).toList()
+        return randomList
+    }
+
     // create sending
+    suspend fun createSending(data:Map<String, Any>) {
+        db.collection("sending").document().set(data)
+    }
 
     // delete sending
+    suspend fun deleteSending(docId:String) {
+        db.collection("sending").document(docId).delete()
+    }
 }
