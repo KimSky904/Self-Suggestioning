@@ -6,11 +6,11 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.eng.selfsuggestion.R
-import com.eng.selfsuggestion.databinding.FragmentDailySpellBinding
+import com.eng.selfsuggestion.databinding.FragmentAddSpecialSpellBinding
 
-class DailySpellFragment : Fragment() {
+class AddSpecialSpellFragment : Fragment() {
 
-    private lateinit var _binding : FragmentDailySpellBinding
+    private lateinit var _binding : FragmentAddSpecialSpellBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,7 +20,8 @@ class DailySpellFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentDailySpellBinding.inflate(inflater, container, false)
+        _binding = FragmentAddSpecialSpellBinding.inflate(inflater, container, false)
         return _binding.root
     }
+
 }

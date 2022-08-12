@@ -1,6 +1,9 @@
 package com.eng.selfsuggestion.view.navigation
 
+import android.animation.ObjectAnimator
+import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,14 +14,15 @@ import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.eng.selfsuggestion.R
 import com.eng.selfsuggestion.databinding.FragmentListBinding
-import com.eng.selfsuggestion.view.spell.DailySpellFragment
-import com.eng.selfsuggestion.view.spell.SpecialSpellFragment
+import com.eng.selfsuggestion.view.spell.*
 import com.google.android.material.tabs.TabLayout
+import com.google.android.material.tabs.TabLayoutMediator
 
 class ListFragment : Fragment() {
 
     private lateinit var _binding : FragmentListBinding
-    // private var indicatorWidth : Int = 0
+    private var isDaily : Boolean = true
+
     private var isClicked : Boolean = false
     private val rotateOpen : Animation by lazy { AnimationUtils.loadAnimation(context, R.anim.rotate_open_anim) }
     private val rotateClose : Animation by lazy { AnimationUtils.loadAnimation(context, R.anim.rotate_close_anim) }
@@ -28,6 +32,14 @@ class ListFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        TabLayoutMediator(_binding.tabLayout, _binding.viewPager) { tab, position ->
+            tab.text = "OBJECT ${(position + 1)}"
+
+        }.attach()
     }
 
     override fun onCreateView(
@@ -46,17 +58,44 @@ class ListFragment : Fragment() {
             }
         })
 
+        // TODO : DELETE
+        _binding.btnTest.setOnClickListener {
+            if(isDaily) {
+                ObjectAnimator.ofFloat(_binding.movingIndicator, "translationX", 420f).apply {
+                    duration = 1000
+                    start()
+                }
+                _binding.btnTest.postDelayed({
+                    _binding.txtIndicatorDaily.setTextColor(Color.BLACK)
+                    _binding.txtIndicatorSpecial.setTextColor(Color.WHITE)
+                }, 450)
+
+                isDaily = !isDaily
+            } else {
+                ObjectAnimator.ofFloat(_binding.movingIndicator, "translationX", 0f).apply {
+                    duration = 1000
+                    start()
+                }
+                _binding.btnTest.postDelayed({
+                    _binding.txtIndicatorDaily.setTextColor(Color.WHITE)
+                    _binding.txtIndicatorSpecial.setTextColor(Color.BLACK)
+                }, 450)
+                isDaily = !isDaily
+            }
+
+        }
+
         _binding.btnFloatingAction.setOnClickListener {
             onAddButtonClicked()
         }
         _binding.btnToOthers.setOnClickListener {
-
+            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.layout_frame, AddToOthersSpellFragment())?.commit()
         }
         _binding.btnDailySpell.setOnClickListener {
-
+            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.layout_frame, AddDailySpellFragment())?.commit()
         }
         _binding.btnSpecialSpell.setOnClickListener {
-
+            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.layout_frame, AddSpecialSpellFragment())?.commit()
         }
 
 
@@ -112,7 +151,6 @@ private class ViewPagerAdapter(
     fragment : FragmentActivity
 ) : FragmentStateAdapter(fragment) {
     override fun getItemCount(): Int = 2
-
     override fun createFragment(position: Int): Fragment {
         return when(position) {
             0 -> DailySpellFragment()
