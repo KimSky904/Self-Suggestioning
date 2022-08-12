@@ -14,6 +14,8 @@
         <entry key="..\:/England/app/src/main/res/drawable/background_btn_ellipse.xml" value="0.35625" />
         <entry key="..\:/England/app/src/main/res/drawable/background_btn_ellipse_2.xml" value="0.234375" />
         <entry key="..\:/England/app/src/main/res/drawable/background_btn_round.xml" value="0.35625" />
+        <entry key="..\:/England/app/src/main/res/drawable/background_dialog.xml" value="0.21875" />
+        <entry key="..\:/England/app/src/main/res/drawable/background_edittxt.xml" value="0.21875" />
         <entry key="..\:/England/app/src/main/res/drawable/background_indicator.xml" value="0.3277777777777778" />
         <entry key="..\:/England/app/src/main/res/drawable/background_tab.xml" value="0.3277777777777778" />
         <entry key="..\:/England/app/src/main/res/layout-v28/activity_base.xml" value="0.23333333333333334" />
@@ -21,14 +23,17 @@
         <entry key="..\:/England/app/src/main/res/layout/activity_main.xml" value="0.25" />
         <entry key="..\:/England/app/src/main/res/layout/activity_splash.xml" value="0.3359375" />
         <entry key="..\:/England/app/src/main/res/layout/background.xml" value="0.2140625" />
+        <entry key="..\:/England/app/src/main/res/layout/dialog_today_spell.xml" value="0.17864583333333334" />
         <entry key="..\:/England/app/src/main/res/layout/fragment_account.xml" value="0.17864583333333334" />
         <entry key="..\:/England/app/src/main/res/layout/fragment_add_spell.xml" value="0.2140625" />
         <entry key="..\:/England/app/src/main/res/layout/fragment_daily_spell.xml" value="0.5" />
         <entry key="..\:/England/app/src/main/res/layout/fragment_home.xml" value="0.33" />
         <entry key="..\:/England/app/src/main/res/layout/fragment_list.xml" value="0.33" />
         <entry key="..\:/England/app/src/main/res/layout/fragment_premium.xml" value="0.17864583333333334" />
-        <entry key="..\:/England/app/src/main/res/layout/fragment_setting.xml" value="0.17864583333333334" />
+        <entry key="..\:/England/app/src/main/res/layout/fragment_setting.xml" value="0.3572916666666667" />
         <entry key="..\:/England/app/src/main/res/layout/fragment_special_spell.xml" value="0.3359375" />
+        <entry key="..\:/England/app/src/main/res/layout/fragment_write_spell_dialog.xml" value="0.33" />
+        <entry key="..\:/England/app/src/main/res/layout/item_settings_list.xml" value="0.33" />
         <entry key="..\:/England/app/src/main/res/menu/menu.xml" value="0.23333333333333334" />
       </map>
     </option>
