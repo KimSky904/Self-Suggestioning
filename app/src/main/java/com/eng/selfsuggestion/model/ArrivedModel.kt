@@ -1,12 +1,12 @@
 package com.eng.selfsuggestion.model
 
-import java.util.*
+import com.google.firebase.Timestamp
+import com.google.type.Date
 
-data class ArrivedModel (
-    val content : String,
-    val timestamp: Long,
-    val arriveday : Date,
-    val uid : String,
-    val docId : String?
+data class ArrivedModel(
+    val content: String?,
+    val timestamp: Timestamp,
+    val arriveday: Date,
+    val docId: String?
 
 )
