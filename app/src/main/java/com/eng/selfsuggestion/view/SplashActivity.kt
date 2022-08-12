@@ -1,11 +1,14 @@
 package com.eng.selfsuggestion.view.login
 
+import android.content.ComponentName
 import android.content.ContentValues.TAG
+import android.content.pm.PackageManager
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Toast
 import com.eng.selfsuggestion.R
+import com.eng.selfsuggestion.receiver.BootReceiver
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.ktx.firestore
@@ -45,4 +48,5 @@ class SplashActivity : AppCompatActivity() {
                 }
             }
     }
+
 }
