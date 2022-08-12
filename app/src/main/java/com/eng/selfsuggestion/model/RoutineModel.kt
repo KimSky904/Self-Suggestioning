@@ -1,11 +1,11 @@
 package com.eng.selfsuggestion.model
 
-import kotlin.collections.ArrayList
+import com.google.firebase.Timestamp
 
-data class RoutineModel (
-    val content : String,
-    val count : Int = 0,
-    val keyword : ArrayList<String>,
-    val timestamp: Long,
-    val uid : String
+data class RoutineModel(
+    val content: String?,
+    val count: Int = 0,
+    val keyword: List<String?>,
+    val timestamp: Timestamp,
+    val docId: String?
 )

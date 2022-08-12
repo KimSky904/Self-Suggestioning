@@ -6,5 +6,7 @@ data class ArrivedModel (
     val content : String,
     val timestamp: Long,
     val arriveday : Date,
-    val uid : String
+    val uid : String,
+    val docId : String?
+
 )
