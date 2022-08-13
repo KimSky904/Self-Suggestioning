@@ -34,14 +34,6 @@ class ListFragment : Fragment() {
         super.onCreate(savedInstanceState)
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        TabLayoutMediator(_binding.tabLayout, _binding.viewPager) { tab, position ->
-            tab.text = "OBJECT ${(position + 1)}"
-
-        }.attach()
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
