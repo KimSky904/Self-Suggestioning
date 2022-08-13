@@ -8,7 +8,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background_box_radius_2"
+        android:background="@drawable/background_box_radius_3"
         android:backgroundTint="#33FFFFFF">
 
         <androidx.constraintlayout.widget.Guideline
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:text="Sample Text"
             style="@style/TitleText"
-            android:textSize="20sp"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="@id/guideline_middle"
             app:layout_constraintLeft_toLeftOf="@id/guideline_left"
             android:includeFontPadding="false"
@@ -57,6 +57,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_sample"
+            android:layout_marginTop="5dp"
             app:layout_constraintLeft_toLeftOf="@id/guideline_left"
             app:layout_constraintTop_toTopOf="@id/guideline_middle"/>
 
@@ -66,6 +67,7 @@
             android:layout_height="wrap_content"
             android:text="2022.08.10"
             style="@style/DateText"
+            android:textSize="13sp"
             android:layout_marginStart="10dp"
             app:layout_constraintLeft_toRightOf="@id/img_item_clock"
             app:layout_constraintTop_toTopOf="@id/img_item_clock"
