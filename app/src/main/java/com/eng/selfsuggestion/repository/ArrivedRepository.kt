@@ -21,11 +21,14 @@ object ArrivedRepository {
     val auth = Firebase.auth
 
     // create arrived
-    suspend fun createArrived(data : ArrivedModel){
-
+    suspend fun createArrived(data : Map<String, Any>){
+        auth.uid?.let {
+            db.collection("arrived").document(it).collection("users").document()
+                .set(data)
+        }
     }
 
-    // get arrive message
+    // get arrive message today
     @RequiresApi(Build.VERSION_CODES.O)
     suspend fun getMessage(): ArrayList<ArrivedModel> {
         val messages = ArrayList<ArrivedModel>()
@@ -79,7 +82,7 @@ object ArrivedRepository {
     }
 
     // get single arrive message
-    suspend fun getRoutine(docId : String): ArrivedModel? {
+    suspend fun getArriveMessage(docId : String): ArrivedModel? {
         var message : ArrivedModel? = null
         auth.uid?.let { db.collection("routine")
             .document(it).collection("users")
@@ -99,7 +102,7 @@ object ArrivedRepository {
     }
 
     // update count
-    suspend fun ModifyRoutine(data:ArrivedModel, docId:String) {
+    suspend fun ModifyArrived(data:ArrivedModel, docId:String) {
         auth.uid?.let {
             db.collection("arrived")
                 .document(it).collection("users")
@@ -112,8 +115,8 @@ object ArrivedRepository {
         }
     }
 
-    // delete routine
-    suspend fun ModifyRoutine(docId: String) {
+    // delete arrived
+    suspend fun DeleteArrived(docId: String) {
         auth.uid?.let {
             db.collection("arrived")
                 .document(it).collection("users")
