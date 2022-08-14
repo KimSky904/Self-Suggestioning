@@ -38,10 +38,10 @@ class InfoSpellActivity : AppCompatActivity() {
         // menu id 식별하여 이벤트 걸기
         when(item.itemId){
             R.id.menu_edit -> {
-
+                // 수정하기
             }
             R.id.menu_delete -> {
-
+                // 삭제하기
             }
         }
         return super.onContextItemSelected(item)
@@ -50,5 +50,10 @@ class InfoSpellActivity : AppCompatActivity() {
     // 그냥 클릭했을 시 안내메시지 보여주기
     fun clickToast(view : View){
         Toast.makeText(this, "it used long click",Toast.LENGTH_SHORT).show()
+    }
+
+    // 그냥 클릭했을 시 안내메시지 보여주기
+    fun finishActivity(view : View){
+        finish()
     }
 }
