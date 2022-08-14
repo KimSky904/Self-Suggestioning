@@ -39,7 +39,6 @@ object RoutineRepository {
                             routines.add(RoutineModel(
                                 doc["content"] as String?,
                                 doc["count"] as Int,
-                                listOf<String?>(doc.get("keywords") as String?),
                                 doc["timestamp"] as Timestamp,
                                 doc.id
                             ))
@@ -62,7 +61,6 @@ object RoutineRepository {
                 routine = RoutineModel(
                     doc["content"] as String?,
                     doc["count"] as Int,
-                    listOf(doc.get("keywords")) as List<String?>,
                     doc["timestamp"] as Timestamp,
                     doc.id
                 )
