@@ -1,6 +1,7 @@
 package com.eng.selfsuggestion.view.navigation
 
 import android.animation.ObjectAnimator
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.util.Log
@@ -81,13 +82,16 @@ class ListFragment : Fragment() {
             onAddButtonClicked()
         }
         _binding.btnToOthers.setOnClickListener {
-            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.layout_frame, AddToOthersSpellFragment())?.commit()
+            val intent = Intent(activity, AddToOthersSpellActivity::class.java)
+            startActivity(intent)
         }
         _binding.btnDailySpell.setOnClickListener {
-            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.layout_frame, AddDailySpellFragment())?.commit()
+            val intent = Intent(activity, AddDailySpellActivity::class.java)
+            startActivity(intent)
         }
         _binding.btnSpecialSpell.setOnClickListener {
-            activity?.supportFragmentManager?.beginTransaction()?.replace(R.id.layout_frame, AddSpecialSpellFragment())?.commit()
+            val intent = Intent(activity, AddSpecialSpellActivity::class.java)
+            startActivity(intent)
         }
 
 
