@@ -50,6 +50,7 @@
                 android:id="@+id/infospell_menu_icon"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:onClick="clickToast"
                 android:layout_marginRight="10dp"
                 android:layout_weight="1.7"
                 android:padding="20dp"

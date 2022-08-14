@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.eng.selfsuggestion">
-
     <!-- device booting check permission -->
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
 
@@ -12,6 +11,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Ssuggestioning">
+        <activity android:name=".view.spell.InfoSpellActivity"></activity>
+
         <receiver
             android:name=".receiver.BootReceiver"
             android:enabled="true"
@@ -24,13 +25,13 @@
             android:name=".receiver.UserAlarmReceiver"
             android:enabled="true"
             android:exported="true" />
+
         <activity
             android:name=".view.navigation.BaseActivity"
             android:exported="false" />
         <activity
             android:name=".view.login.SplashActivity"
-            android:exported="true">
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".view.login.SignUpActivity"
             android:exported="false" />
@@ -39,9 +40,10 @@
             android:exported="false" />
         <activity
             android:name=".MainActivity"
-            android:exported="true" >
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
