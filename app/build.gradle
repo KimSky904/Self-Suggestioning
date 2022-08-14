@@ -76,4 +76,7 @@ dependencies {
     // Add the dependency for notification
     implementation "com.android.support:support-compat:28.0.0"
 
+    // expanding bottom sheets
+    implementation 'com.google.android.material:material:1.2.0-alpha02'
+
 }
