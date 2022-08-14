@@ -73,8 +73,8 @@ dependencies {
     // Add the dependency for the kotlin coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")
 
-    // Add the dependency for notification
-    implementation "com.android.support:support-compat:28.0.0"
+    // Add the dependency for notification (modified)
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     // expanding bottom sheets
     implementation 'com.google.android.material:material:1.2.0-alpha02'

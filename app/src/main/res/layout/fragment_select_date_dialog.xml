@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".view.dialog.SelectDateDialogFragment">
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.15" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.85" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.25" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="282dp"
+        android:layout_height="0dp"
+        app:layout_constraintLeft_toLeftOf="@id/guideline_left"
+        app:layout_constraintRight_toRightOf="@id/guideline_right"
+        app:layout_constraintTop_toTopOf="@id/guideline_top"
+        android:background="@drawable/background_dialog"
+        android:backgroundTint="@color/white">
+
+        <ImageView
+            android:id="@+id/btn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_cancel"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginTop="15dp"
+            android:layout_marginEnd="15dp"/>
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_inner_left"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.08" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_inner_right"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.92" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_inner_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.08" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_inner_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintGuide_percent="0.92" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_inner_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.35" />
+
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/guideline_inner_two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.65" />
+
+        <!--
+                <NumberPicker
+            android:id="@+id/picker_month"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:datePickerMode="spinner"
+            android:theme="@style/NumberPicker"
+            android:calendarViewShown="false"
+            app:layout_constraintTop_toTopOf="@id/guideline_inner_top"
+            app:layout_constraintRight_toRightOf="@id/guideline_inner_one"
+            app:layout_constraintLeft_toLeftOf="@id/guideline_inner_left"/>
+
+        <NumberPicker
+            android:id="@+id/picker_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:datePickerMode="spinner"
+            android:theme="@style/NumberPicker"
+            android:calendarViewShown="false"
+            app:layout_constraintTop_toTopOf="@id/guideline_inner_top"
+            app:layout_constraintRight_toRightOf="@id/guideline_inner_two"
+            app:layout_constraintLeft_toLeftOf="@id/guideline_inner_one"/>
+
+        <NumberPicker
+            android:id="@+id/picker_year"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:datePickerMode="spinner"
+            android:theme="@style/NumberPicker"
+            android:calendarViewShown="false"
+            app:layout_constraintTop_toTopOf="@id/guideline_inner_top"
+            app:layout_constraintRight_toRightOf="@id/guideline_inner_right"
+            app:layout_constraintLeft_toLeftOf="@id/guideline_inner_two"/>
+        -->
+        <DatePicker
+            android:id="@+id/picker_date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:datePickerMode="spinner"
+            android:theme="@style/NumberPicker"
+            android:calendarViewShown="false"
+            app:layout_constraintTop_toTopOf="@id/guideline_inner_top"
+            app:layout_constraintLeft_toLeftOf="@id/guideline_inner_left"
+            app:layout_constraintRight_toRightOf="@id/guideline_inner_right"/>
+
+        <Button
+            android:id="@+id/btn_save"
+            android:layout_width="0dp"
+            android:layout_height="54dp"
+            android:text="Save"
+            android:textAllCaps="false"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:fontFamily="@font/noto_sans_kr_medium"
+            android:background="@drawable/background_btn_ellipse_2"
+            app:layout_constraintLeft_toLeftOf="@id/guideline_inner_left"
+            app:layout_constraintRight_toRightOf="@id/guideline_inner_right"
+            app:layout_constraintTop_toBottomOf="@id/picker_date"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

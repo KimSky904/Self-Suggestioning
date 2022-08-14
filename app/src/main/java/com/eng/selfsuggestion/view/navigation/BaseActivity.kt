@@ -6,10 +6,6 @@ import android.util.Log
 import androidx.fragment.app.Fragment
 import com.eng.selfsuggestion.R
 import com.eng.selfsuggestion.databinding.ActivityBaseBinding
-import com.eng.selfsuggestion.view.spell.AddDailySpellFragment
-import com.eng.selfsuggestion.view.spell.AddSpecialSpellFragment
-import com.eng.selfsuggestion.view.spell.AddToOthersSpellFragment
-import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class BaseActivity : AppCompatActivity() {
 
