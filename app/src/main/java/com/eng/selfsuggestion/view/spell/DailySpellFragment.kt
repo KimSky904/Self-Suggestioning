@@ -37,7 +37,7 @@ class DailySpellFragment : Fragment() {
         val three = TestingModel("2022-02-024","Just Do It")
 
         val scopeIO = CoroutineScope(Dispatchers.IO)
-        val dailyadapter = DailySpellAdapter()
+        val dailyadapter = DailySpellAdapter(context,parentFragmentManager)
 
         // get all routines array
         scopeIO.launch {
@@ -65,7 +65,7 @@ class DailySpellFragment : Fragment() {
             }
         }
 
-        _binding.listRecycleSpecial.adapter = DailySpellAdapter()
+        _binding.listRecycleSpecial.adapter = dailyadapter
         _binding.listRecycleSpecial.layoutManager = LinearLayoutManager(context)
 
         return _binding.root

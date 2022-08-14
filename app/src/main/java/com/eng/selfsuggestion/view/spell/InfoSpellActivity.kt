@@ -3,21 +3,40 @@ package com.eng.selfsuggestion.view.spell
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.ContextMenu
+import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
+import android.view.View.inflate
 import android.widget.Toast
 import com.eng.selfsuggestion.R
+import com.eng.selfsuggestion.databinding.ActivityAddDailySpellBinding.inflate
 import com.eng.selfsuggestion.databinding.ActivityBaseBinding
 import com.eng.selfsuggestion.databinding.ActivityInfoSpellBinding
+import com.eng.selfsuggestion.databinding.BottomSheetsBinding
+import java.util.*
 
 class InfoSpellActivity : AppCompatActivity() {
 
     lateinit var binding : ActivityInfoSpellBinding
+    var content : String? = null
+    var date : String? = null
+    var count : Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityInfoSpellBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val binding_ = BottomSheetsBinding.inflate(layoutInflater)
+
+        val intent = getIntent()
+        content = intent.getStringExtra("content")
+        date = intent.getStringExtra("date")
+        count = intent.getIntExtra("count",0)
+
+        binding.infospellContent.text = content
+        binding_.sheetTimeSubTxt.text = date
+        binding_.sheetDateSubTxt.text = count.toString()+"번 하셨습니다."
 
         registerForContextMenu(binding.infospellMenuIcon)
     }
@@ -52,7 +71,7 @@ class InfoSpellActivity : AppCompatActivity() {
         Toast.makeText(this, "it used long click",Toast.LENGTH_SHORT).show()
     }
 
-    // 그냥 클릭했을 시 안내메시지 보여주기
+    // 돌아가기
     fun finishActivity(view : View){
         finish()
     }

@@ -165,7 +165,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/noto_sans_kr_medium"
             android:includeFontPadding="false"
-            android:text="Created Time"
+            android:text="Special Date"
             android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/sheets_date_icon"

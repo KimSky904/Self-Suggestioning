@@ -30,7 +30,7 @@ class SpecialSpellFragment : Fragment() {
         val two = TestingModel("2022-02-03","Just Do It!")
         val three = TestingModel("2022-02-024","Just Do It")
         val testingLIst : List<TestingModel> = listOf(one,two,three)
-        _binding.listRecycleSpecial.adapter = SpecialSpellAdapter(testingLIst)
+        _binding.listRecycleSpecial.adapter = SpecialSpellAdapter(context, parentFragmentManager ,testingLIst)
         _binding.listRecycleSpecial.layoutManager = LinearLayoutManager(context)
 
         return _binding.root
