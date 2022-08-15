@@ -10,6 +10,8 @@ import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.type.Date
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
@@ -19,13 +21,14 @@ import kotlin.collections.ArrayList
 object ArrivedRepository {
     val db = FirebaseFirestore.getInstance()
     val auth = Firebase.auth
+    val scopeIO = CoroutineScope(Dispatchers.IO)
 
     // create arrived
     fun createArrived(data : Map<String, Any>): MutableLiveData<String> {
         val result = MutableLiveData<String>()
         Log.i(TAG, "createRoutine: 스페셜생성함수 "+ RoutineRepository.auth.uid)
         // network coroutine scope
-        RoutineRepository.scopeIO.launch {
+        scopeIO.launch {
             RoutineRepository.auth.uid?.let {
                 Log.i(TAG, "createRoutine: 스페셜생성함수 내부"+data)
                 RoutineRepository.db.collection("arrived").document(it).collection("users").document()
@@ -49,28 +52,31 @@ object ArrivedRepository {
         val messages = ArrayList<ArrivedModel>()
         val Livemessages = MutableLiveData<ArrayList<ArrivedModel>>()
         val today = SimpleDateFormat("yyyy/MM/dd").format(Calendar.getInstance().time)
-        auth.uid?.let {
-            Log.i(TAG, "getMessage: 도착한 메세지 가져오기 함수 auth"+today)
 
-            db.collection("arrived")
-                .document(it).collection("users")
-                .whereEqualTo("arrivedate", today)
-                .orderBy("timestamp")
-                .addSnapshotListener(EventListener { value, error ->
-                    if (value != null) {
-                        messages.clear()
-                        for (doc in value) {
-                            messages.add(ArrivedModel(
-                                doc["content"] as String?,
-                                (doc["timestamp"] as Timestamp).toDate(),
-                                doc["arrivedate"] as String?,
-                                doc.id
-                            ))
+        scopeIO.launch {
+            auth.uid?.let {
+                Log.i(TAG, "getMessage: 도착한 메세지 가져오기 함수 auth"+today)
+
+                db.collection("arrived")
+                    .document(it).collection("users")
+                    .whereEqualTo("arrivedate", today)
+                    .orderBy("timestamp")
+                    .addSnapshotListener(EventListener { value, error ->
+                        if (value != null) {
+                            messages.clear()
+                            for (doc in value) {
+                                messages.add(ArrivedModel(
+                                    doc["content"] as String?,
+                                    (doc["timestamp"] as Timestamp).toDate(),
+                                    doc["arrivedate"] as String?,
+                                    doc.id
+                                ))
+                            }
+                            Log.i(TAG, "getMessage: 도착메세지 "+messages)
+                            Livemessages.postValue(messages)
                         }
-                        Log.i(TAG, "getMessage: 도착메세지 "+messages)
-                        Livemessages.postValue(messages)
-                    }
-                })
+                    })
+            }
         }
         return Livemessages
     }
@@ -96,26 +102,44 @@ object ArrivedRepository {
     }
 
     // update
-    suspend fun ModifyArrived(data:ArrivedModel, docId:String) {
-        auth.uid?.let {
-            db.collection("arrived")
-                .document(it).collection("users")
-                .document(docId)
-                .update(mapOf(
-                    "content" to data.content,
-                )).addOnSuccessListener {
-                    Log.i(TAG, "ModifyRoutine: success update routine")
-                }
+    fun modifyArrived(data:Map<String,Any>, docId:String): MutableLiveData<String> {
+        val result = MutableLiveData<String>()
+
+        scopeIO.launch {
+            auth.uid?.let {
+                db.collection("arrived")
+                    .document(it).collection("users")
+                    .document(docId)
+                    .update(mapOf(
+                        "content" to data["content"],
+                        "arrivedate" to data["arrivedate"],
+                    )).addOnSuccessListener {
+                        Log.i(TAG, "ModifyRoutine: success update routine")
+                        result.postValue("success")
+                    }.addOnFailureListener{
+                        result.postValue("fail")
+                    }
+            }
         }
+        return result
     }
 
     // delete arrived
-    suspend fun DeleteArrived(docId: String) {
-        auth.uid?.let {
-            db.collection("arrived")
-                .document(it).collection("users")
-                .document(docId).delete()
+    fun deleteArrived(docId: String): MutableLiveData<String> {
+        val result = MutableLiveData<String>()
+
+        scopeIO.launch {
+            RoutineRepository.auth.uid?.let {
+                RoutineRepository.db.collection("arrived")
+                    .document(it).collection("users")
+                    .document(docId).delete().addOnSuccessListener {
+                        result.postValue("success")
+                    }.addOnFailureListener {
+                        result.postValue("fail")
+                    }
+            }
         }
+        return result
     }
 
 }

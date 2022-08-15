@@ -9,16 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.eng.selfsuggestion.R
 import com.eng.selfsuggestion.model.ArrivedModel
-import com.eng.selfsuggestion.model.RoutineModel
-import com.eng.selfsuggestion.model.TestingModel
 import com.eng.selfsuggestion.view.dialog.SpellListFunctionDialogFragment
 import com.eng.selfsuggestion.view.spell.InfoSpecialActivity
-import com.eng.selfsuggestion.view.spell.InfoSpellActivity
 import java.text.SimpleDateFormat
 
 class SpecialSpellAdapter(private val context : Context?, private val fragmentManager: FragmentManager) : RecyclerView.Adapter<SpecialSpellAdapter.ViewHolder>() {
@@ -36,7 +32,9 @@ class SpecialSpellAdapter(private val context : Context?, private val fragmentMa
             titleText.text = item.content
             dateText.text = SimpleDateFormat("yyyy-MM-dd").format(item.timestamp)
             btnMore.setOnClickListener {
-                val dialogFragment = SpellListFunctionDialogFragment(1)
+                val adapter = SpellListFunctionDialogFragment(0)
+                adapter.setArrived(item)
+                val dialogFragment = adapter
                 dialogFragment.show(fragmentManager, "SpellListFunctionDialogFragment")
             }
         }

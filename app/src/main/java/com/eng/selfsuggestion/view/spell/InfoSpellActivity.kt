@@ -71,13 +71,23 @@ class InfoSpellActivity : AppCompatActivity() {
             R.id.menu_edit -> {
                 // 수정하기
                 val intent = Intent(baseContext, EditDailySpellActivity::class.java)
+                intent.putExtra("docId",docId)
                 startActivity(intent)
             }
             R.id.menu_delete -> {
                 // 삭제하기
-                scopeIO.launch {
-                    docId?.let { routineRef.deleteRoutine(it) }
-                }
+                docId?.let {
+                    routineRef.deleteRoutine(it).observe(this,{
+                        if (it=="success"){
+                            Toast.makeText(this, "success delete spell",
+                                Toast.LENGTH_SHORT).show()
+                            finish()
+                        }else{
+                            Toast.makeText(this, "fail delete spell",
+                                Toast.LENGTH_SHORT).show()
+                        }
+                    })                }
+
             }
         }
         return super.onContextItemSelected(item)

@@ -12,6 +12,7 @@ import com.eng.selfsuggestion.R
 import com.eng.selfsuggestion.databinding.ActivityInfoSpecialBinding
 import com.eng.selfsuggestion.databinding.ActivityInfoSpellBinding
 import com.eng.selfsuggestion.databinding.BottomSheetsBinding
+import com.eng.selfsuggestion.repository.ArrivedRepository
 import com.eng.selfsuggestion.repository.RoutineRepository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -65,19 +66,29 @@ class InfoSpecialActivity : AppCompatActivity() {
     }
 
     override fun onContextItemSelected(item: MenuItem): Boolean {
-        val routineRef = RoutineRepository
+        val arriveRef = ArrivedRepository
 
         // menu id 식별하여 이벤트 걸기
         when(item.itemId){
             R.id.menu_edit -> {
                 // 수정하기
                 val intent = Intent(baseContext, EditSpecialSpellActivity::class.java)
+                intent.putExtra("docId",docId)
                 startActivity(intent)
             }
             R.id.menu_delete -> {
                 // 삭제하기
-                scopeIO.launch {
-                    docId?.let { routineRef.deleteRoutine(it) }
+                docId?.let {
+                    arriveRef.deleteArrived(it).observe(this,{
+                        if (it=="success"){
+                            Toast.makeText(this, "success delete spell",
+                                Toast.LENGTH_SHORT).show()
+                            finish()
+                        }else{
+                            Toast.makeText(this, "fail delete spell",
+                                Toast.LENGTH_SHORT).show()
+                        }
+                    })
                 }
             }
         }

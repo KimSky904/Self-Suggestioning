@@ -103,18 +103,26 @@ object RoutineRepository {
     }
 
     // update count
-    suspend fun modifyRoutine(data: RoutineModel, docId:String) {
-        auth.uid?.let {
-            db.collection("routine")
-                .document(it).collection("users")
-                .document(docId)
-                .update(mapOf(
-                    "content" to data.content,
-                    "count" to data.count
-                )).addOnSuccessListener {
-                    Log.i(ContentValues.TAG, "ModifyRoutine: success update routine")
-                }
+    fun modifyRoutine(data: Map<String,Any>, docId:String): MutableLiveData<String> {
+        val result = MutableLiveData<String>()
+
+        scopeIO.launch {
+            auth.uid?.let {
+                db.collection("routine")
+                    .document(it).collection("users")
+                    .document(docId)
+                    .update(mapOf(
+                        "content" to data["content"],
+                    )).addOnSuccessListener {
+                        result.postValue("success")
+                        Log.i(ContentValues.TAG, "ModifyRoutine: success update routine")
+                    }.addOnFailureListener{
+                        result.postValue("fail")
+                    }
+            }
         }
+
+        return result
     }
     // update count
     fun countUp(data: RoutineModel, docId:String) {
@@ -133,11 +141,20 @@ object RoutineRepository {
     }
 
     // delete routine
-    suspend fun deleteRoutine(docId: String) {
-        auth.uid?.let {
-            db.collection("routine")
-                .document(it).collection("users")
-                .document(docId).delete()
+    fun deleteRoutine(docId: String): MutableLiveData<String> {
+        val result = MutableLiveData<String>()
+
+        scopeIO.launch {
+            auth.uid?.let {
+                db.collection("routine")
+                    .document(it).collection("users")
+                    .document(docId).delete().addOnSuccessListener {
+                        result.postValue("success")
+                    }.addOnFailureListener {
+                        result.postValue("fail")
+                    }
+            }
         }
+        return result
     }
 }
