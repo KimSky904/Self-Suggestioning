@@ -1,5 +1,6 @@
 package com.eng.selfsuggestion.view.navigation
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -45,9 +46,13 @@ class HomeFragment : Fragment() {
         scopeIO.launch { 
             val routineRef = RoutineRepository
             val sendingRef = SendingRepository
-            val arrivedRef = ArrivedRepository
             val daily = routineRef.getRandomRoutine()
+            val pref = context?.getSharedPreferences("pref", Context.MODE_PRIVATE)!!
 
+            with(pref.edit()) {
+                putString("docId", daily.docId)
+                commit()
+            }
             // get random arrived : return random element
             val list = ArrivedRepository.getMessage()
             

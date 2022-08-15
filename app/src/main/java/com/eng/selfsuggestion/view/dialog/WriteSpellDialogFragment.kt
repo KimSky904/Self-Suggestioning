@@ -1,5 +1,7 @@
 package com.eng.selfsuggestion.view.dialog
 
+import android.content.Context
+import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -13,17 +15,22 @@ import com.eng.selfsuggestion.MainActivity
 import com.eng.selfsuggestion.R
 import com.eng.selfsuggestion.databinding.FragmentHomeBinding
 import com.eng.selfsuggestion.databinding.FragmentWriteSpellDialogBinding
+import com.eng.selfsuggestion.model.RoutineModel
+import com.eng.selfsuggestion.repository.RoutineRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class WriteSpellDialogFragment : DialogFragment() {
 
     private lateinit var _binding : FragmentWriteSpellDialogBinding
-    private lateinit var bindinghome : FragmentHomeBinding
+    private lateinit var pref: SharedPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        bindinghome = FragmentHomeBinding.inflate(inflater, container, false)
+        pref = context?.getSharedPreferences("pref", Context.MODE_PRIVATE)!!
         _binding = FragmentWriteSpellDialogBinding.inflate(inflater, container, false)
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
@@ -32,6 +39,14 @@ class WriteSpellDialogFragment : DialogFragment() {
           _binding.txtSpell.text =
           _binding.edittxtSpell.text =
          */
+        val docId = pref.getString("todaySpell", "")
+        val routineRef = RoutineRepository
+        val scopeIO = CoroutineScope(Dispatchers.IO)
+        var daily : RoutineModel? = null
+
+        scopeIO.launch {
+            daily = docId?.let { routineRef.getRoutine(it) }
+        }
 
         _binding.btnCancel.setOnClickListener {
             dialog?.dismiss()
@@ -40,10 +55,9 @@ class WriteSpellDialogFragment : DialogFragment() {
         _binding.btnAbracadabra.setOnClickListener {
             val textValue : String = _binding.edittxtSpell.text.toString()
             // TODO : "SAMPLE"부분에 FIREBASE 연동
-            val dataValue = bindinghome.txtTodaySpell.text.toString()
+            val dataValue = daily?.content
 
-
-            if(textValue.uppercase().replace(" ","") == dataValue.uppercase().replace(" ","")) {
+            if(textValue.uppercase().replace(" ","") == dataValue?.uppercase()?.replace(" ","")) {
                 dialog?.dismiss()
             } else {
                 // TODO : 일치하지 않는 경우 무슨 처리?
