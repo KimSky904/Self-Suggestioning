@@ -1,19 +1,17 @@
 package com.eng.selfsuggestion.repository
 
 import android.content.ContentValues.TAG
-import android.os.Build
 import android.util.Log
-import androidx.annotation.RequiresApi
+import androidx.lifecycle.MutableLiveData
 import com.eng.selfsuggestion.model.ArrivedModel
-import com.eng.selfsuggestion.model.RoutineModel
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.type.Date
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
-import java.time.LocalDate
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -23,18 +21,37 @@ object ArrivedRepository {
     val auth = Firebase.auth
 
     // create arrived
-    suspend fun createArrived(data : Map<String, Any>){
-        auth.uid?.let {
-            db.collection("arrived").document(it).collection("users").document()
-                .set(data)
+    fun createArrived(data : Map<String, Any>): MutableLiveData<String> {
+        val result = MutableLiveData<String>()
+        Log.i(TAG, "createRoutine: 스페셜생성함수 "+ RoutineRepository.auth.uid)
+        // network coroutine scope
+        RoutineRepository.scopeIO.launch {
+            RoutineRepository.auth.uid?.let {
+                Log.i(TAG, "createRoutine: 스페셜생성함수 내부"+data)
+                RoutineRepository.db.collection("arrived").document(it).collection("users").document()
+                    .set(data).addOnSuccessListener {
+                        Log.i(TAG, "createRoutine: success create arrived"+data)
+                        result.postValue("success")
+
+                    }.addOnFailureListener {
+                        Log.i(TAG, "createRoutine: "+it)
+                        result.postValue("fail")
+                    }
+            }
         }
+
+        return result
     }
 
     // get arrive message today
-    suspend fun getMessage(): ArrayList<ArrivedModel> {
+    fun getMessage(): MutableLiveData<ArrayList<ArrivedModel>> {
+        Log.i(TAG, "getMessage: 도착한 메세지 가져오기 함수")
         val messages = ArrayList<ArrivedModel>()
-        val today = SimpleDateFormat("yyyy/MM/dd").format(Calendar.getInstance())
+        val Livemessages = MutableLiveData<ArrayList<ArrivedModel>>()
+        val today = SimpleDateFormat("yyyy/MM/dd").format(Calendar.getInstance().time)
         auth.uid?.let {
+            Log.i(TAG, "getMessage: 도착한 메세지 가져오기 함수 auth"+today)
+
             db.collection("arrived")
                 .document(it).collection("users")
                 .whereEqualTo("arrivedate", today)
@@ -46,14 +63,16 @@ object ArrivedRepository {
                             messages.add(ArrivedModel(
                                 doc["content"] as String?,
                                 doc["timestamp"] as Timestamp,
-                                doc["arrviedate"] as Date,
+                                doc["arrivedate"] as String?,
                                 doc.id
                             ))
                         }
+                        Log.i(TAG, "getMessage: 도착메세지 "+messages)
+                        Livemessages.postValue(messages)
                     }
                 })
         }
-        return messages
+        return Livemessages
     }
 
     // get all arrived array
@@ -71,7 +90,7 @@ object ArrivedRepository {
                             messages.add(ArrivedModel(
                                 doc["content"] as String?,
                                 doc["timestamp"] as Timestamp,
-                                doc["arrviedate"] as Date,
+                                doc["arrviedate"] as String?,
                                 doc.id
                             ))
                         }
@@ -93,7 +112,7 @@ object ArrivedRepository {
                 message = ArrivedModel(
                     doc["content"] as String?,
                     doc["timestamp"] as Timestamp,
-                    doc["arrvieday"] as Date,
+                    doc["arrvieday"] as String?,
                     doc.id
                 )
             }

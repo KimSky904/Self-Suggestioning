@@ -1,7 +1,9 @@
 package com.eng.selfsuggestion.adapter
 
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,6 +15,7 @@ import com.eng.selfsuggestion.R
 import com.eng.selfsuggestion.model.RoutineModel
 import com.eng.selfsuggestion.view.dialog.SpellListFunctionDialogFragment
 import com.eng.selfsuggestion.view.spell.InfoSpellActivity
+import java.text.SimpleDateFormat
 
 class DailySpellAdapter(private val context : Context?, private val fragmentManager: FragmentManager,) : RecyclerView.Adapter<DailySpellAdapter.ViewHolder>() {
 
@@ -26,8 +29,9 @@ class DailySpellAdapter(private val context : Context?, private val fragmentMana
         private val btnMore : ImageView = itemView.findViewById(R.id.icon_more)
 
         fun bind(item: RoutineModel) {
+            Log.i("TAG", "bind: 데일리 어댑터 아이템 "+item)
             titleText.text = item.content
-            dateText.text = item.timestamp.toString()
+            dateText.text = SimpleDateFormat("yyyy-MM-dd").format(item.timestamp)
 
             btnMore.setOnClickListener {
                 val dialogFragment = SpellListFunctionDialogFragment(0)
@@ -48,6 +52,7 @@ class DailySpellAdapter(private val context : Context?, private val fragmentMana
             intent.putExtra("content", dailyList[position].content)
             intent.putExtra("date", dailyList[position].timestamp.toString())
             intent.putExtra("count", dailyList[position].count)
+            Log.i(TAG, "onBindViewHolder: 어댑터 카운트"+dailyList[position].count)
             intent.putExtra("docId", dailyList[position].docId)
             context!!.startActivity(intent)
         }

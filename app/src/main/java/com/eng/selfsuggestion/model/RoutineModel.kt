@@ -4,7 +4,7 @@ import java.util.*
 
 data class RoutineModel(
     val content: String?,
-    val count: Int = 0,
+    val count: Long = 0,
     val timestamp: Date,
     val docId: String?
 )

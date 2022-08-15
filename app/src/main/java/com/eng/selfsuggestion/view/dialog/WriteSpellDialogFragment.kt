@@ -1,13 +1,16 @@
 package com.eng.selfsuggestion.view.dialog
 
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.DialogFragment
 import com.eng.selfsuggestion.databinding.FragmentWriteSpellDialogBinding
 import com.eng.selfsuggestion.model.RoutineModel
@@ -34,14 +37,16 @@ class WriteSpellDialogFragment : DialogFragment() {
           _binding.txtSpell.text =
           _binding.edittxtSpell.text =
          */
-        val docId = pref.getString("todaySpell", "")
+        val docId = pref.getString("docId", "")
         val routineRef = RoutineRepository
-        val scopeIO = CoroutineScope(Dispatchers.IO)
         var daily : RoutineModel? = null
 
-        scopeIO.launch {
-            daily = docId?.let { routineRef.getRoutine(it) }
+        docId?.let {
+            routineRef.getRoutine(it).observe(requireActivity(), {
+                daily = it
+            })
         }
+
 
         _binding.btnCancel.setOnClickListener {
             dialog?.dismiss()
@@ -54,10 +59,11 @@ class WriteSpellDialogFragment : DialogFragment() {
 
             if(textValue.uppercase().replace(" ","") == dataValue?.uppercase()?.replace(" ","")) {
                 // 카운트 증가하기
-                scopeIO.launch {
-                    routineRef.countUp(daily!!, docId!!)
-                }
+                routineRef.countUp(daily!!, docId!!)
+                Toast.makeText(context,"자기암시 완료 !",Toast.LENGTH_SHORT).show()
+                Log.i(TAG, "onCreateView: dialogWrite 카운트 증가함"+daily)
                 dialog?.dismiss()
+
             } else {
                 // TODO : 일치하지 않는 경우 무슨 처리?
             }

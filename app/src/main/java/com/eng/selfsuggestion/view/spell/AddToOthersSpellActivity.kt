@@ -33,7 +33,7 @@ class AddToOthersSpellActivity : AppCompatActivity() {
             Log.i("TAG", "onCreate: btn clicked"+binding.edittextSpellName.text)
             // create firebase routine
             val inputData = mapOf<String, Any>(
-                "contents" to binding.edittextSpellName.text.toString(),
+                "content" to binding.edittextSpellName.text.toString(),
                 "timestamp" to date,
                 "uid" to auth.uid.toString()
             )

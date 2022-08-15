@@ -1,6 +1,8 @@
 package com.eng.selfsuggestion.view.spell
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -53,11 +55,12 @@ class DailySpellFragment : Fragment() {
                             for(doc in value){
                                 routines.add(RoutineModel(
                                     doc["content"] as String?,
-                                    doc["count"] as Int,
+                                    doc["count"] as Long,
                                     (doc["timestamp"] as Timestamp).toDate(),
                                     doc.id
                                 ))
                             }
+                            Log.i(TAG, "onCreateView: 데일리 리스트 데이터 낱개"+routines)
                         }
 
                         dailyadapter.setDailyList(routines)

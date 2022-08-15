@@ -12,7 +12,6 @@ import androidx.fragment.app.DialogFragment
 import com.eng.selfsuggestion.R
 import com.eng.selfsuggestion.databinding.FragmentSpellListFunctionDialogBinding
 import com.eng.selfsuggestion.model.RoutineModel
-import com.eng.selfsuggestion.repository.RoutineRepository.ModifyRoutine
 import com.eng.selfsuggestion.view.spell.DailySpellFragment
 import com.eng.selfsuggestion.view.spell.SpecialSpellFragment
 

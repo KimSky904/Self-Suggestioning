@@ -1,16 +1,13 @@
 package com.eng.selfsuggestion.view.spell
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.ContentValues
 import android.os.Bundle
-import android.view.ContextMenu
-import android.view.LayoutInflater
-import android.view.MenuItem
-import android.view.View
-import android.view.View.inflate
+import android.util.Log
+import android.view.*
+import android.widget.TextView
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.eng.selfsuggestion.R
-import com.eng.selfsuggestion.databinding.ActivityAddDailySpellBinding.inflate
-import com.eng.selfsuggestion.databinding.ActivityBaseBinding
 import com.eng.selfsuggestion.databinding.ActivityInfoSpellBinding
 import com.eng.selfsuggestion.databinding.BottomSheetsBinding
 import com.eng.selfsuggestion.repository.RoutineRepository
@@ -18,6 +15,7 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.util.*
+
 
 class InfoSpellActivity : AppCompatActivity() {
 
@@ -27,25 +25,27 @@ class InfoSpellActivity : AppCompatActivity() {
     var content : String? = null
     var date : String? = null
     var docId : String? = null
-    var count : Int = 0
+    var count : Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityInfoSpellBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val binding_ = BottomSheetsBinding.inflate(layoutInflater)
+        val bottom_sheet = findViewById<View>(R.id.bottom_sheet_layout)
+        val bs_time = bottom_sheet.findViewById<TextView>(R.id.sheet_time_sub_txt)
+        val bs_date = bottom_sheet.findViewById<TextView>(R.id.sheet_date_sub_txt)
         scopeIO = CoroutineScope(Dispatchers.IO)
 
         val intent = getIntent()
         content = intent.getStringExtra("content")
         date = intent.getStringExtra("date")
-        count = intent.getIntExtra("count",0)
+        count = intent.getLongExtra("count",0)
         docId = intent.getStringExtra("docId")
 
         binding.infospellContent.text = content
-        binding_.sheetTimeSubTxt.text = date
-        binding_.sheetDateSubTxt.text = count.toString()+"번 하셨습니다."
+        bs_time.text = date
+        bs_date.text = count.toString()+"번 하셨습니다."
 
         registerForContextMenu(binding.infospellMenuIcon)
     }
@@ -53,7 +53,7 @@ class InfoSpellActivity : AppCompatActivity() {
     override fun onCreateContextMenu(
         menu: ContextMenu?,
         v: View?,
-        menuInfo: ContextMenu.ContextMenuInfo?
+        menuInfo: ContextMenu.ContextMenuInfo?,
     ) {
         super.onCreateContextMenu(menu, v, menuInfo)
 

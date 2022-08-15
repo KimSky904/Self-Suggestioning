@@ -3,6 +3,7 @@ package com.eng.selfsuggestion.view.spell
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TimePicker
+import android.widget.Toast
 import com.eng.selfsuggestion.databinding.ActivityAddSpecialSpellBinding
 import com.eng.selfsuggestion.repository.ArrivedRepository
 import com.eng.selfsuggestion.repository.RoutineRepository
@@ -46,7 +47,7 @@ class AddSpecialSpellActivity : AppCompatActivity() {
                 val date = Calendar.getInstance().time
 
                 val data = mapOf<String,Any>(
-                    "contents" to binding.edittextSpellName.text.toString(),
+                    "content" to binding.edittextSpellName.text.toString(),
                     "count" to 0,
                     "timestamp" to date,
                     "arrivedate" to targetdate,
@@ -54,10 +55,19 @@ class AddSpecialSpellActivity : AppCompatActivity() {
                 )
 
                 // create firebase specialspell
-                scopeIO.launch {
-                    val arriveRef = ArrivedRepository
-                    arriveRef.createArrived(data)
-                }
+                val arriveRef = ArrivedRepository
+                arriveRef.createArrived(data).observe(this@AddSpecialSpellActivity,{
+                    if (it=="success"){
+                        Toast.makeText(this@AddSpecialSpellActivity, "success send your spell",
+                            Toast.LENGTH_SHORT).show()
+                        finish()
+                    }else{
+                        Toast.makeText(this@AddSpecialSpellActivity, "fail send your spell",
+                            Toast.LENGTH_SHORT).show()
+                    }
+
+                })
+
             }
         }
     }

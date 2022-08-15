@@ -1,14 +1,15 @@
 package com.eng.selfsuggestion.view.navigation
 
+import android.content.ContentValues.TAG
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.eng.selfsuggestion.databinding.FragmentHomeBinding
-import com.eng.selfsuggestion.model.ArrivedModel
-import com.eng.selfsuggestion.model.SendingModel
 import com.eng.selfsuggestion.repository.ArrivedRepository
 import com.eng.selfsuggestion.repository.RoutineRepository
 import com.eng.selfsuggestion.repository.SendingRepository
@@ -21,6 +22,7 @@ class HomeFragment : Fragment() {
 
     private lateinit var _binding : FragmentHomeBinding
     private lateinit var scopeIO : CoroutineScope
+    private lateinit var pref : SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -43,41 +45,53 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         
         // 파이어베이스에서 랜덤으로 데일리 가져오기
-        scopeIO.launch { 
-            val routineRef = RoutineRepository
-            val sendingRef = SendingRepository
-            val daily = routineRef.getRandomRoutine()
-            val pref = context?.getSharedPreferences("pref", Context.MODE_PRIVATE)!!
+        val routineRef = RoutineRepository
+        val arriveRef = ArrivedRepository
+        val sendingRef = SendingRepository
+        pref = context?.getSharedPreferences("pref", Context.MODE_PRIVATE)!!
+
+        routineRef.getRandomRoutine().observe(requireActivity(), {
+            val routines = it
+            Log.i(TAG, "getRandomRoutine: routines 내용" + routines)
+            val random: Int = (0..(routines.size-1)).random()  // 1 <= n <= 20
+            Log.i(TAG, "getRandomRoutine: routines 랜덤 데이터" + random + "/ " + routines.get(0))
+            val daily =routines.get(random)
+            Log.i(TAG, "onViewCreated: 랜덤 데일리 데이터"+daily)
+
+            _binding.txtTodaySpell.text = daily.content
 
             with(pref.edit()) {
                 putString("docId", daily.docId)
                 commit()
             }
-            // get random arrived : return random element
-            val list = ArrivedRepository.getMessage()
-            
-            // 오늘 온 스페셜 메세지가 없을경우
-            if (list.size <=0){
-                val special_other =sendingRef.getRandomSending()
 
-                // 다른사람이 보낸 메세지로 대체한다.
-                with(Dispatchers.Main){
-                    _binding.txtDailySpell.text = special_other.content
+            Log.i(TAG, "onViewCreated: HomeFragment : 오늘의 데일리"+pref.getString("docId",""))
+
+            // 오늘 들어온 메세지 가져오기
+            arriveRef.getMessage().observe(requireActivity(),{
+                val list = it
+
+                Log.i(TAG, "onViewCreated: 오늘 들어온 메세지Home"+list+" / "+list.size)
+                //  오늘 온 스페셜 메세지가 없을경우
+                if (list.size <=0){
+                    sendingRef.getRandomSending().observe(requireActivity(),{
+                        val special_other = it
+                        _binding.txtDailySpell.text = special_other.content
+                        Log.i(TAG, "onViewCreated: 스페셜"+special_other)
+                    })
+                }else{
+                    val ran = (0..(list.size-1)).random()  // 1 <= n <= 20
+                    val special = list.get(ran)
+
+                    // 오늘 온 메세지 내용을 보여준다.
+                    _binding.txtDailySpell.text = special.content
+                    Log.i(TAG, "onViewCreated: d오늘온거"+special)
+
                 }
-            }else{
-                val random = (0..list.size).random()  // 1 <= n <= 20
-                val special_special = list.get(random)
 
-                // 오늘 온 메세지 내용을 보여준다.
-                with(Dispatchers.Main){
-                    _binding.txtDailySpell.text = special_special.content
-                }
-            }
+            })
 
-            // show daily random
-            with(Dispatchers.Main){
-                _binding.txtTodaySpell.text = daily.content
-            }
-        }
+        })
+
     }
 }
