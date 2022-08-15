@@ -11,7 +11,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Ssuggestioning">
-
+        <activity android:name=".view.spell.InfoSpecialActivity"></activity>
         <activity
             android:name=".view.spell.AddToOthersSpellActivity"
             android:exported="false" />
@@ -20,14 +20,10 @@
             android:exported="false" />
         <activity
             android:name=".view.spell.AddDailySpellActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
         <activity
             android:name=".view.spell.InfoSpellActivity"
-            android:exported="true">
-
-        </activity>
+            android:exported="true"></activity>
 
         <receiver
             android:name=".receiver.BootReceiver"
@@ -37,7 +33,6 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-
         <receiver
             android:name=".receiver.UserAlarmReceiver"
             android:enabled="true"
@@ -55,7 +50,6 @@
         <activity
             android:name=".MainActivity"
             android:exported="true">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

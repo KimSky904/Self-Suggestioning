@@ -3,6 +3,7 @@ package com.eng.selfsuggestion.view.dialog
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -41,6 +42,7 @@ class SelectDateDialogFragment : DialogFragment() {
             }
             strValue += _binding.pickerDate.dayOfMonth
             strValue += ", " + _binding.pickerDate.year
+            Log.i("TAG", "onCreateView: 날짜 다이얼로그"+_binding.pickerDate.year.toString()+value.year)
             listener.onSaveClicked(value, strValue)
             dialog?.dismiss()
         }
@@ -57,6 +59,7 @@ class SelectDateDialogFragment : DialogFragment() {
     fun setOnClickListener(listener: (Date, String) -> Unit) {
         this.listener = object : DialogSaveClickedListener {
             override fun onSaveClicked(content: Date, textValue: String) {
+                Log.i("TAG", "onSaveClicked: 클릭했을때 날짜"+content+"/"+textValue)
                 listener(content, textValue)
             }
         }

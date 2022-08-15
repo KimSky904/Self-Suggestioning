@@ -2,6 +2,7 @@ package com.eng.selfsuggestion.view.spell
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.TimePicker
 import android.widget.Toast
 import com.eng.selfsuggestion.databinding.ActivityAddSpecialSpellBinding
@@ -32,6 +33,7 @@ class AddSpecialSpellActivity : AppCompatActivity() {
             dialogFragment.setOnClickListener { content, textValue ->
                 binding.txtSpellDate.text = textValue
                 scopeIO = CoroutineScope(Dispatchers.IO)
+                content.year = content.year-1900
                 targetdate = SimpleDateFormat("yyyy/MM/dd").format(content)
             }
             dialogFragment.show(supportFragmentManager, "SelectDateDialogFragment")
@@ -41,6 +43,7 @@ class AddSpecialSpellActivity : AppCompatActivity() {
             // spell_name : spell name
             // time_picker : 사용자가 입력한 Date, 위에서 형변환 필요
             val spellName = binding.edittextSpellName.text
+            Log.i("TAG", "onCreate: 생성 스페셜엑티비티 날짜"+targetdate)
             if(!spellName.isBlank() && targetdate != null) {
                 // TODO : firebase에 저장~!
                 val auth = FirebaseAuth.getInstance()
@@ -48,7 +51,6 @@ class AddSpecialSpellActivity : AppCompatActivity() {
 
                 val data = mapOf<String,Any>(
                     "content" to binding.edittextSpellName.text.toString(),
-                    "count" to 0,
                     "timestamp" to date,
                     "arrivedate" to targetdate,
                     "uid" to auth.uid.toString()

@@ -62,7 +62,7 @@ object ArrivedRepository {
                         for (doc in value) {
                             messages.add(ArrivedModel(
                                 doc["content"] as String?,
-                                doc["timestamp"] as Timestamp,
+                                (doc["timestamp"] as Timestamp).toDate(),
                                 doc["arrivedate"] as String?,
                                 doc.id
                             ))
@@ -75,32 +75,6 @@ object ArrivedRepository {
         return Livemessages
     }
 
-    // get all arrived array
-    suspend fun getArrived() : ArrayList<ArrivedModel> {
-        val messages = ArrayList<ArrivedModel>()
-
-        auth.uid?.let {
-            db.collection("arrived")
-                .document(it).collection("users")
-                .orderBy("timestamp")
-                .addSnapshotListener(EventListener { value, error ->
-                    if(value != null){
-                        messages.clear()
-                        for(doc in value){
-                            messages.add(ArrivedModel(
-                                doc["content"] as String?,
-                                doc["timestamp"] as Timestamp,
-                                doc["arrviedate"] as String?,
-                                doc.id
-                            ))
-                        }
-                    }
-                })
-        }
-
-        return messages
-    }
-
     // get single arrive message
     suspend fun getArriveMessage(docId : String): ArrivedModel? {
         var message : ArrivedModel? = null
@@ -111,7 +85,7 @@ object ArrivedRepository {
             .addOnSuccessListener { doc ->
                 message = ArrivedModel(
                     doc["content"] as String?,
-                    doc["timestamp"] as Timestamp,
+                    (doc["timestamp"] as Timestamp).toDate(),
                     doc["arrvieday"] as String?,
                     doc.id
                 )

@@ -38,7 +38,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.288" />
+        app:layout_constraintGuide_percent="0.29" />
+
 
     <View
         android:id="@+id/view2"
@@ -67,19 +68,6 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@id/guideline_right"
         app:layout_constraintTop_toBottomOf="@id/guideline_top" />
-
-    <ImageView
-        android:id="@+id/testing"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/noto_sans_kr_medium"
-        android:src="@drawable/icon_bottom_sheet_bar"
-        android:textColor="@color/white"
-        android:textSize="16sp"
-        android:layout_marginTop="10dp"
-        app:layout_constraintEnd_toEndOf="@id/guideline_right"
-        app:layout_constraintStart_toStartOf="@+id/guideline_left"
-        app:layout_constraintTop_toTopOf="@id/guideline_top" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/sheets_constraintLayout"
@@ -110,8 +98,6 @@
             app:layout_constraintEnd_toStartOf="@+id/guideline_txt_left"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-
 
         <TextView
             android:id="@+id/sheet_time_txt"
@@ -179,7 +165,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/noto_sans_kr_medium"
             android:includeFontPadding="false"
-            android:text="How many"
+            android:text="Special Date"
             android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/sheets_date_icon"
