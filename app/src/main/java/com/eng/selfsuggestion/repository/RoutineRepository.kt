@@ -5,7 +5,6 @@ import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.util.Log
 import com.eng.selfsuggestion.model.RoutineModel
-import com.eng.selfsuggestion.model.SendingModel
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.EventListener
@@ -88,6 +87,19 @@ object RoutineRepository {
                 .update(mapOf(
                     "content" to data.content,
                     "count" to data.count
+                )).addOnSuccessListener {
+                    Log.i(ContentValues.TAG, "ModifyRoutine: success update routine")
+                }
+        }
+    }
+    // update count
+    suspend fun countUp(data: RoutineModel, docId:String) {
+        auth.uid?.let {
+            db.collection("routine")
+                .document(it).collection("users")
+                .document(docId)
+                .update(mapOf(
+                    "count" to data.count+1
                 )).addOnSuccessListener {
                     Log.i(ContentValues.TAG, "ModifyRoutine: success update routine")
                 }
