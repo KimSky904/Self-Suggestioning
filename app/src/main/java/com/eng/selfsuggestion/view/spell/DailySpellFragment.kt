@@ -33,11 +33,6 @@ class DailySpellFragment : Fragment() {
     ): View? {
         _binding = FragmentDailySpellBinding.inflate(inflater, container, false)
 
-        // TODO : DELETE (TESTING)
-        val one = TestingModel("2022-02-02","Daily Can Do It")
-        val two = TestingModel("2022-02-03","Just Do It!")
-        val three = TestingModel("2022-02-024","Just Do It")
-
         val scopeIO = CoroutineScope(Dispatchers.IO)
         val dailyadapter = DailySpellAdapter(context,parentFragmentManager)
 

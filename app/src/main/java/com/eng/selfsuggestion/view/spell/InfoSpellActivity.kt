@@ -45,7 +45,7 @@ class InfoSpellActivity : AppCompatActivity() {
 
         binding.infospellContent.text = content
         bs_time.text = date
-        bs_date.text = count.toString()+"번 하셨습니다."
+        bs_date.text = "you tried $count!"
 
         registerForContextMenu(binding.infospellMenuIcon)
     }

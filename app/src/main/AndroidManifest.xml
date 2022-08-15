@@ -11,7 +11,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Ssuggestioning">
-        <activity android:name=".view.spell.InfoSpecialActivity"></activity>
+        <activity
+            android:name=".view.spell.EditSpecialSpellActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.spell.EditDailySpellActivity"
+            android:exported="false" />
+        <activity android:name=".view.spell.InfoSpecialActivity" />
         <activity
             android:name=".view.spell.AddToOthersSpellActivity"
             android:exported="false" />
@@ -20,10 +26,16 @@
             android:exported="false" />
         <activity
             android:name=".view.spell.AddDailySpellActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".view.spell.InfoSpellActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
+        <activity
+            android:name=".view.settings.NotificateActivity"
+            android:exported="false" />
+        <activity
+            android:name=".view.settings.PremiumActivity"
+            android:exported="false" />
 
         <receiver
             android:name=".receiver.BootReceiver"

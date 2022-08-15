@@ -39,7 +39,7 @@ class MainActivity : AppCompatActivity() {
             // haven't auth
             signInAnonymously()
         }
-        Log.i(ContentValues.TAG, "onStart: currentUser"+auth.uid)
+        Log.i(ContentValues.TAG, "onStart: currentUser"+auth.currentUser?.uid)
     }
 
     // create user anonymously

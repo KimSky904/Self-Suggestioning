@@ -43,6 +43,7 @@ class AddToOthersSpellActivity : AppCompatActivity() {
                 Log.i("TAG", "onCreate: scope IO 실행"+inputData)
                 sendingRef.createSending(inputData)
             }
+            finish()
         }
     }
 }
