@@ -1,19 +1,30 @@
 package com.eng.selfsuggestion.view.settings
 
 import android.animation.ObjectAnimator
+import android.app.AlarmManager
+import android.app.PendingIntent
+import android.content.Context
+import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.view.animation.Animation
 import android.view.animation.AnimationUtils
 import android.widget.LinearLayout
 import android.widget.NumberPicker
+import android.widget.Toast
 import androidx.transition.Fade
 import androidx.transition.Transition
 import androidx.transition.TransitionManager
 import com.eng.selfsuggestion.R
 import com.eng.selfsuggestion.databinding.ActivityNotificateBinding
+import com.eng.selfsuggestion.receiver.UserAlarmReceiver
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.util.*
 
 class NotificateActivity : AppCompatActivity() {
 
@@ -22,6 +33,8 @@ class NotificateActivity : AppCompatActivity() {
 
     private val fromBottom : Animation by lazy { AnimationUtils.loadAnimation(baseContext, R.anim.from_bottom_anim) }
     private val toBottom : Animation by lazy { AnimationUtils.loadAnimation(baseContext, R.anim.to_bottom_anim) }
+    private val defaultScope = CoroutineScope(Dispatchers.Default)
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,6 +77,15 @@ class NotificateActivity : AppCompatActivity() {
                 isStateOn = !isStateOn
             }
         }
+
+        binding.btnBack.setOnClickListener{
+            val calendar: Calendar = Calendar.getInstance().apply {
+                timeInMillis = System.currentTimeMillis()
+                set(Calendar.HOUR_OF_DAY, binding.hourPicker.value)
+                set(Calendar.MINUTE, binding.minutePicker.value)
+            }
+            alarmSetting(calendar)
+        }
     }
 
     private fun initView() {
@@ -91,5 +113,27 @@ class NotificateActivity : AppCompatActivity() {
         }
         binding.minutePicker.displayedValues = minList.toTypedArray()
 
+    }
+
+    // alarm setting
+    // standard parameter : time set data by the user
+    fun alarmSetting(standard : Calendar){
+        defaultScope.launch {
+            var alarmMgr: AlarmManager? = null
+            lateinit var alarmIntent: PendingIntent
+
+            alarmMgr = this@NotificateActivity.getSystemService(Context.ALARM_SERVICE) as AlarmManager
+            alarmIntent = Intent(this@NotificateActivity, UserAlarmReceiver::class.java).let { intent ->
+                PendingIntent.getBroadcast(this@NotificateActivity, 0, intent, 0)
+            }
+            alarmMgr?.setInexactRepeating(
+                AlarmManager.RTC_WAKEUP,
+                standard.timeInMillis,
+                AlarmManager.INTERVAL_DAY,
+                alarmIntent
+            )
+
+            Toast.makeText(this@NotificateActivity,"Setting Alarm Time",Toast.LENGTH_SHORT).show()
+        }
     }
 }
