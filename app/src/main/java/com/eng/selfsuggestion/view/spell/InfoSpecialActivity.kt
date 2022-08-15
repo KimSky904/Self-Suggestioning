@@ -1,6 +1,7 @@
 package com.eng.selfsuggestion.view.spell
 
 import android.content.ContentValues
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.*
@@ -70,6 +71,8 @@ class InfoSpecialActivity : AppCompatActivity() {
         when(item.itemId){
             R.id.menu_edit -> {
                 // 수정하기
+                val intent = Intent(baseContext, EditSpecialSpellActivity::class.java)
+                startActivity(intent)
             }
             R.id.menu_delete -> {
                 // 삭제하기

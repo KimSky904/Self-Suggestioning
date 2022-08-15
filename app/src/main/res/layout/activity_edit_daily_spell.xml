@@ -6,4 +6,158 @@
     android:layout_height="match_parent"
     tools:context=".view.spell.EditDailySpellActivity">
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.07" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.9" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_top"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.35" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_bottom"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.4" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_inner_center"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.15" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/background_bg_top"
+        android:backgroundTint="@color/BG"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/guideline_top"/>
+    <View
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/background_bg_middle"
+        android:backgroundTint="@color/BG"
+        app:layout_constraintTop_toBottomOf="@id/guideline_top"
+        app:layout_constraintBottom_toTopOf="@id/guideline_bottom"
+        app:layout_constraintLeft_toRightOf="@id/guideline_left"
+        app:layout_constraintRight_toRightOf="parent"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/background_bg_bottom"
+        android:backgroundTint="@color/black"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@id/guideline_right"
+        app:layout_constraintTop_toBottomOf="@id/guideline_top"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+    <TextView
+        android:id="@+id/txt_settings_title"
+        android:text="Make your Spell"
+        style="@style/TitleText"
+        android:textColor="@color/black"
+        app:layout_constraintLeft_toRightOf="@id/guideline_left"
+        app:layout_constraintBottom_toTopOf="@id/guideline_inner_center"
+        android:layout_marginTop="15dp"
+        android:textSize="29sp"
+        android:includeFontPadding="false"/>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_sample"
+        app:layout_constraintRight_toRightOf="@id/guideline_right"
+        app:layout_constraintTop_toBottomOf="@id/guideline_inner_center"
+        app:layout_constraintBottom_toTopOf="@id/guideline_top"/>
+
+    <ImageView
+        android:id="@+id/icon_spell_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_sample"
+        app:tint="@color/light_gray"
+        app:layout_constraintTop_toBottomOf="@id/guideline_bottom"
+        app:layout_constraintLeft_toLeftOf="@id/guideline_left" />
+
+    <TextView
+        android:id="@+id/txt_spell_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Spell Name"
+        style="@style/TitleText"
+        android:textSize="21sp"
+        app:layout_constraintTop_toTopOf="@id/icon_spell_name"
+        app:layout_constraintBottom_toBottomOf="@id/icon_spell_name"
+        app:layout_constraintLeft_toRightOf="@id/icon_spell_name"
+        android:layout_marginStart="15dp"/>
+
+    <EditText
+        android:id="@+id/edittext_spell_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Please write your spell here."
+        android:includeFontPadding="false"
+        style="@style/ContentText"
+        android:background="@null"
+        android:textColorHint="#80FFFFFF"
+        android:textSize="15sp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/icon_spell_name"
+        app:layout_constraintLeft_toLeftOf="@id/txt_spell_name"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_bottom_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.92" />
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@drawable/background_bg_button"
+        app:layout_constraintTop_toBottomOf="@id/guideline_bottom_button"
+        app:layout_constraintBottom_toBottomOf="parent">
+        <TextView
+            android:id="@+id/btn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cancel"
+            style="@style/TitleText"
+            android:textSize="18sp"
+            android:textColor="@color/gray"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toLeftOf="@id/btn_save"/>
+        <TextView
+            android:id="@+id/btn_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Save"
+            style="@style/TitleText"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintLeft_toRightOf="@id/btn_cancel"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

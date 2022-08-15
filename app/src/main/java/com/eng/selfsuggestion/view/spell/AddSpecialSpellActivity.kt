@@ -39,6 +39,10 @@ class AddSpecialSpellActivity : AppCompatActivity() {
             dialogFragment.show(supportFragmentManager, "SelectDateDialogFragment")
         }
 
+        binding.btnCancel.setOnClickListener {
+            finish()
+        }
+
         binding.btnSave.setOnClickListener {
             // spell_name : spell name
             // time_picker : 사용자가 입력한 Date, 위에서 형변환 필요
