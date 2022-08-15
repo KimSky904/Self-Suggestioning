@@ -114,6 +114,7 @@
         android:layout_height="wrap_content"
         android:hint="Please write your spell here."
         android:includeFontPadding="false"
+        android:maxLength="15"
         style="@style/ContentText"
         android:background="@null"
         android:textColorHint="#80FFFFFF"

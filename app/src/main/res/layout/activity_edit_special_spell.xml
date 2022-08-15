@@ -114,6 +114,7 @@
         android:hint="Please write your spell here."
         android:includeFontPadding="false"
         style="@style/ContentText"
+        android:maxLength="15"
         android:background="@null"
         android:textColorHint="#80FFFFFF"
         android:textSize="15sp"

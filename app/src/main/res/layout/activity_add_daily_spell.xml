@@ -116,6 +116,7 @@
         android:includeFontPadding="false"
         style="@style/ContentText"
         android:background="@null"
+        android:maxLength="15"
         android:textColorHint="#80FFFFFF"
         android:textSize="15sp"
         android:layout_marginTop="16dp"
