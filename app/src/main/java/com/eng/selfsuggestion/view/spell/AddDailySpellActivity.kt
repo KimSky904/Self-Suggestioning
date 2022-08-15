@@ -47,6 +47,7 @@ class AddDailySpellActivity : AppCompatActivity() {
             routineRef.createRoutine(inputData).observe(this@AddDailySpellActivity,androidx.lifecycle.Observer{
                 if (it=="success"){
                     Toast.makeText(this@AddDailySpellActivity, "success make your spell",Toast.LENGTH_SHORT).show()
+                    finish()
                 }else{
                     Toast.makeText(this@AddDailySpellActivity, "fail make your spell",Toast.LENGTH_SHORT).show()
                 }

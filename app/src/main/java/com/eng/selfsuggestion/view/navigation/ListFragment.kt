@@ -98,6 +98,7 @@ class ListFragment : Fragment() {
             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
             startActivity(intent)
+            activity?.overridePendingTransition(R.anim.translate_none,R.anim.translate_none)
         }
 
 

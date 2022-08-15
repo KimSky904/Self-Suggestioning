@@ -37,12 +37,6 @@ class SpecialSpellFragment : Fragment() {
     ): View? {
         _binding = FragmentSpecialSpellBinding.inflate(inflater, container, false)
 
-        // TODO : DELETE (TESTING)
-        val one = TestingModel("2022-02-02","Special Can Do It")
-        val two = TestingModel("2022-02-03","Just Do It!")
-        val three = TestingModel("2022-02-024","Just Do It")
-        val testingLIst : List<TestingModel> = listOf(one,two,three)
-
         val scopeIO = CoroutineScope(Dispatchers.IO)
         val specialadapter = SpecialSpellAdapter(context, parentFragmentManager )
 

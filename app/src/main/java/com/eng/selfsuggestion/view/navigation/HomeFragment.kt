@@ -71,29 +71,29 @@ class HomeFragment : Fragment() {
             Log.i(TAG, "onViewCreated: HomeFragment : 오늘의 데일리"+pref.getString("docId",""))
 
             // 오늘 들어온 메세지 가져오기
-            arriveRef.getMessage().observe(requireActivity(),{
-                val list = it
+            if(activity != null) {
+                arriveRef.getMessage().observe(requireActivity(), {
+                    val list = it
 
-                Log.i(TAG, "onViewCreated: 오늘 들어온 메세지Home"+list+" / "+list.size)
-                //  오늘 온 스페셜 메세지가 없을경우
-                if (list.size <=0){
-                    sendingRef.getRandomSending().observe(requireActivity(),{
-                        val special_other = it
-                        _binding.txtDailySpell.text = special_other.content
-                        Log.i(TAG, "onViewCreated: 스페셜"+special_other)
-                    })
-                }else{
-                    val ran = (0..(list.size-1)).random()  // 1 <= n <= 20
-                    val special = list.get(ran)
+                    Log.i(TAG, "onViewCreated: 오늘 들어온 메세지Home" + list + " / " + list.size)
+                    //  오늘 온 스페셜 메세지가 없을경우
+                    if (list.size <= 0) {
+                        sendingRef.getRandomSending().observe(requireActivity(), {
+                            val special_other = it
+                            _binding.txtDailySpell.text = special_other.content
+                            Log.i(TAG, "onViewCreated: 스페셜" + special_other)
+                        })
+                    } else {
+                        val ran = (0..(list.size - 1)).random()  // 1 <= n <= 20
+                        val special = list.get(ran)
 
-                    // 오늘 온 메세지 내용을 보여준다.
-                    _binding.txtDailySpell.text = special.content
-                    Log.i(TAG, "onViewCreated: d오늘온거"+special)
+                        // 오늘 온 메세지 내용을 보여준다.
+                        _binding.txtDailySpell.text = special.content
+                        Log.i(TAG, "onViewCreated: d오늘온거" + special)
 
-                }
-
-            })
-
+                    }
+                })
+            }
         })
 
     }
