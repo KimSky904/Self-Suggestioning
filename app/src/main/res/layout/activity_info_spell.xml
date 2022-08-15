@@ -40,7 +40,7 @@
                 android:layout_weight="1.5"
                 android:padding="16dp"
                 android:onClick="finishActivity"
-                app:srcCompat="@drawable/icon_arrow_back" />
+                app:srcCompat="@drawable/ic_icon_arrow_back" />
 
             <TextView
                 android:id="@+id/infospell_title"
@@ -61,7 +61,7 @@
                 android:layout_marginRight="10dp"
                 android:layout_weight="1.7"
                 android:padding="20dp"
-                app:srcCompat="@drawable/icon_more_horiz" />
+                app:srcCompat="@drawable/ic_icon_more_horiz" />
         </LinearLayout>
 
         <TextView
