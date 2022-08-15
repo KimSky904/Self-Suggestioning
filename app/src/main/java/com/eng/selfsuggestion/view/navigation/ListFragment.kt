@@ -83,14 +83,20 @@ class ListFragment : Fragment() {
         }
         _binding.btnToOthers.setOnClickListener {
             val intent = Intent(activity, AddToOthersSpellActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
             startActivity(intent)
         }
         _binding.btnDailySpell.setOnClickListener {
             val intent = Intent(activity, AddDailySpellActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
             startActivity(intent)
         }
         _binding.btnSpecialSpell.setOnClickListener {
             val intent = Intent(activity, AddSpecialSpellActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
             startActivity(intent)
         }
 
