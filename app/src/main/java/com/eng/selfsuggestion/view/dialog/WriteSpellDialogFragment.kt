@@ -11,16 +11,19 @@ import android.view.ViewGroup
 import androidx.fragment.app.DialogFragment
 import com.eng.selfsuggestion.MainActivity
 import com.eng.selfsuggestion.R
+import com.eng.selfsuggestion.databinding.FragmentHomeBinding
 import com.eng.selfsuggestion.databinding.FragmentWriteSpellDialogBinding
 
 class WriteSpellDialogFragment : DialogFragment() {
 
     private lateinit var _binding : FragmentWriteSpellDialogBinding
+    private lateinit var bindinghome : FragmentHomeBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        bindinghome = FragmentHomeBinding.inflate(inflater, container, false)
         _binding = FragmentWriteSpellDialogBinding.inflate(inflater, container, false)
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
@@ -37,7 +40,7 @@ class WriteSpellDialogFragment : DialogFragment() {
         _binding.btnAbracadabra.setOnClickListener {
             val textValue : String = _binding.edittxtSpell.text.toString()
             // TODO : "SAMPLE"부분에 FIREBASE 연동
-            val dataValue = "SAMPLE"
+            val dataValue = bindinghome.txtTodaySpell.text.toString()
 
 
             if(textValue.uppercase().replace(" ","") == dataValue.uppercase().replace(" ","")) {

@@ -48,6 +48,7 @@ class DailySpellAdapter(private val context : Context?, private val fragmentMana
             intent.putExtra("content", dailyList[position].content)
             intent.putExtra("date", dailyList[position].timestamp.toString())
             intent.putExtra("count", dailyList[position].count)
+            intent.putExtra("docId", dailyList[position].docId)
             context!!.startActivity(intent)
         }
     }

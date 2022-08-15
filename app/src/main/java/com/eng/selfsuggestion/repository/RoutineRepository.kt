@@ -5,6 +5,7 @@ import android.content.ContentValues
 import android.content.ContentValues.TAG
 import android.util.Log
 import com.eng.selfsuggestion.model.RoutineModel
+import com.eng.selfsuggestion.model.SendingModel
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.EventListener
@@ -49,8 +50,37 @@ object RoutineRepository {
 
     }
 
+
+    // get random routine : return random elements list
+    suspend fun getRandomRoutine(): RoutineModel {
+        val routines = ArrayList<RoutineModel>()
+
+        RoutineRepository.auth.uid?.let {
+            RoutineRepository.db.collection("routine")
+                .document(it).collection("users")
+                .orderBy("timestamp")
+                .addSnapshotListener(EventListener { value, error ->
+                    if(value != null){
+                        routines.clear()
+                        for(doc in value){
+                            routines.add(RoutineModel(
+                                doc["content"] as String?,
+                                doc["count"] as Int,
+                                (doc["timestamp"] as Timestamp).toDate(),
+                                doc.id
+                            ))
+                        }
+                    }
+
+                })
+        }
+
+        val random = (0..(routines.size)).random()  // 1 <= n <= 20
+        return routines.get(random)
+    }
+
     // update count
-    suspend fun ModifyRoutine(data: RoutineModel, docId:String) {
+    suspend fun modifyRoutine(data: RoutineModel, docId:String) {
         auth.uid?.let {
             db.collection("routine")
                 .document(it).collection("users")
@@ -65,7 +95,7 @@ object RoutineRepository {
     }
 
     // delete routine
-    suspend fun ModifyRoutine(docId: String) {
+    suspend fun deleteRoutine(docId: String) {
         auth.uid?.let {
             db.collection("routine")
                 .document(it).collection("users")

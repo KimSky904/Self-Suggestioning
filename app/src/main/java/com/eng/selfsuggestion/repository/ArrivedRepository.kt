@@ -12,7 +12,9 @@ import com.google.firebase.firestore.EventListener
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.type.Date
+import java.text.SimpleDateFormat
 import java.time.LocalDate
+import java.util.*
 import kotlin.collections.ArrayList
 
 // object(singleton pattern)
@@ -29,14 +31,13 @@ object ArrivedRepository {
     }
 
     // get arrive message today
-    @RequiresApi(Build.VERSION_CODES.O)
     suspend fun getMessage(): ArrayList<ArrivedModel> {
         val messages = ArrayList<ArrivedModel>()
-        val today = LocalDate.now()
+        val today = SimpleDateFormat("yyyy/MM/dd").format(Calendar.getInstance())
         auth.uid?.let {
             db.collection("arrived")
                 .document(it).collection("users")
-                .whereEqualTo("arriveday", today)
+                .whereEqualTo("arrivedate", today)
                 .orderBy("timestamp")
                 .addSnapshotListener(EventListener { value, error ->
                     if (value != null) {
@@ -45,7 +46,7 @@ object ArrivedRepository {
                             messages.add(ArrivedModel(
                                 doc["content"] as String?,
                                 doc["timestamp"] as Timestamp,
-                                doc["arrvieday"] as Date,
+                                doc["arrviedate"] as Date,
                                 doc.id
                             ))
                         }
@@ -70,7 +71,7 @@ object ArrivedRepository {
                             messages.add(ArrivedModel(
                                 doc["content"] as String?,
                                 doc["timestamp"] as Timestamp,
-                                doc["arrvieday"] as Date,
+                                doc["arrviedate"] as Date,
                                 doc.id
                             ))
                         }
@@ -84,7 +85,7 @@ object ArrivedRepository {
     // get single arrive message
     suspend fun getArriveMessage(docId : String): ArrivedModel? {
         var message : ArrivedModel? = null
-        auth.uid?.let { db.collection("routine")
+        auth.uid?.let { db.collection("arrived")
             .document(it).collection("users")
             .document(docId)
             .get()
@@ -101,7 +102,7 @@ object ArrivedRepository {
 
     }
 
-    // update count
+    // update
     suspend fun ModifyArrived(data:ArrivedModel, docId:String) {
         auth.uid?.let {
             db.collection("arrived")

@@ -38,11 +38,11 @@ object SendingRepository {
     }
 
     // get random sendings : return random elements list
-    suspend fun getRandomSending(numOfList:Int): List<SendingModel> {
+    suspend fun getRandomSending(): SendingModel {
         val list = getSendings()
 
-        val randomList = list.asSequence().shuffled().take(numOfList).toList()
-        return randomList
+        val random = (0..(list.size-1)).random()  // 1 <= n <= 20
+        return list.get(random)
     }
 
     // create sending
