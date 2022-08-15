@@ -179,7 +179,7 @@
             android:layout_height="wrap_content"
             android:fontFamily="@font/noto_sans_kr_medium"
             android:includeFontPadding="false"
-            android:text="How many"
+            android:text="@string/sheets_count"
             android:textColor="@color/white"
             android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="@+id/sheets_date_icon"

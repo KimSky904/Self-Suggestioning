@@ -52,9 +52,10 @@ class HomeFragment : Fragment() {
 
         routineRef.getRandomRoutine().observe(requireActivity(), {
             val routines = it
+            // 아무것도 없을때 예외
             if(routines.size<=0){
                 return@observe
-            }
+            } 
             Log.i(TAG, "getRandomRoutine: routines 내용" + routines)
             val random: Int = (0..(routines.size-1)).random()  // 1 <= n <= 20
             Log.i(TAG, "getRandomRoutine: routines 랜덤 데이터" + random + "/ " + routines.get(0))
