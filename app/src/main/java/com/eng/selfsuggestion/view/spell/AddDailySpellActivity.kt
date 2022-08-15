@@ -33,6 +33,10 @@ class AddDailySpellActivity : AppCompatActivity() {
         val date = Calendar.getInstance().time
         val str_date = SimpleDateFormat("yyyy/MM/dd").format(date)
 
+        binding.btnCancel.setOnClickListener {
+            finish()
+        }
+
         binding.btnSave.setOnClickListener {
             Log.i("TAG", "onCreate: btn clicked"+binding.edittextSpellName.text)
             // create firebase routine
