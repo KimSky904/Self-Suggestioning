@@ -25,9 +25,11 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnSignIn.setOnClickListener {
             val intent = Intent(this,BaseActivity::class.java)
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION)
             startActivity(intent)
+            overridePendingTransition(R.anim.translate_none,R.anim.translate_none)
+            finish()
         }
-
     }
 
     override fun onStart() {

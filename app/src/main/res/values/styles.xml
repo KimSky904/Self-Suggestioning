@@ -49,6 +49,8 @@
     </style>
 
     <style name="NumberPicker" parent="Theme.AppCompat.Light.NoActionBar" >
-        <item name="android:colorControlNormal">@color/white</item>
+        <item name="android:colorControlNormal">#00FFFFFF</item>
+        <item name="android:textSize">29sp</item>
+        <item name="fontFamily">@font/noto_sans_kr_bold</item>
     </style>
 </resources>

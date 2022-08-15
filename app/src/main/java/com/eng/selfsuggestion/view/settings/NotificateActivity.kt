@@ -1,0 +1,95 @@
+package com.eng.selfsuggestion.view.settings
+
+import android.animation.ObjectAnimator
+import android.graphics.Color
+import androidx.appcompat.app.AppCompatActivity
+import android.os.Bundle
+import android.view.View
+import android.view.animation.Animation
+import android.view.animation.AnimationUtils
+import android.widget.LinearLayout
+import android.widget.NumberPicker
+import androidx.transition.Fade
+import androidx.transition.Transition
+import androidx.transition.TransitionManager
+import com.eng.selfsuggestion.R
+import com.eng.selfsuggestion.databinding.ActivityNotificateBinding
+
+class NotificateActivity : AppCompatActivity() {
+
+    private lateinit var binding : ActivityNotificateBinding
+    private var isStateOn = false
+
+    private val fromBottom : Animation by lazy { AnimationUtils.loadAnimation(baseContext, R.anim.from_bottom_anim) }
+    private val toBottom : Animation by lazy { AnimationUtils.loadAnimation(baseContext, R.anim.to_bottom_anim) }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        binding = ActivityNotificateBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+        initView()
+
+
+        binding.txtIndicatorOff.setOnClickListener {
+            if(isStateOn) {
+                ObjectAnimator.ofFloat(binding.movingIndicator, "translationX", 0f).apply {
+                    // time set 비활성화
+                    binding.boxTimeSet.visibility = View.INVISIBLE
+                    binding.boxTimeSet.startAnimation(toBottom)
+                    duration = 1000
+                    start()
+                }
+                binding.txtIndicatorOff.postDelayed({
+                    binding.txtIndicatorOn.setTextColor(Color.BLACK)
+                    binding.txtIndicatorOff.setTextColor(Color.WHITE)
+                }, 450)
+
+                isStateOn = !isStateOn
+            }
+        }
+        binding.txtIndicatorOn.setOnClickListener {
+            if(!isStateOn) {
+                ObjectAnimator.ofFloat(binding.movingIndicator, "translationX", 390f).apply {
+                    // time set 활성화
+                    binding.boxTimeSet.visibility = View.VISIBLE
+                    binding.boxTimeSet.startAnimation(fromBottom)
+                    duration = 1000
+                    start()
+                }
+                binding.txtIndicatorOn.postDelayed({
+                    binding.txtIndicatorOff.setTextColor(Color.BLACK)
+                    binding.txtIndicatorOn.setTextColor(Color.WHITE)
+                }, 450)
+
+                isStateOn = !isStateOn
+            }
+        }
+    }
+
+    private fun initView() {
+        binding.hourPicker.maxValue = 23
+        binding.hourPicker.minValue = 0
+        binding.hourPicker.wrapSelectorWheel = true
+        binding.hourPicker.showDividers = LinearLayout.SHOW_DIVIDER_NONE
+        binding.hourPicker.descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
+        val hourList = mutableListOf<String>()
+        for(i in 0..23) {
+            if(i/10 == 0) hourList.add("0$i")
+            else hourList.add(i.toString())
+        }
+        binding.hourPicker.displayedValues = hourList.toTypedArray()
+
+        binding.minutePicker.maxValue = 59
+        binding.minutePicker.minValue = 0
+        binding.minutePicker.wrapSelectorWheel = true
+        binding.minutePicker.showDividers = LinearLayout.SHOW_DIVIDER_NONE
+        binding.minutePicker.descendantFocusability = NumberPicker.FOCUS_BLOCK_DESCENDANTS
+        val minList = mutableListOf<String>()
+        for(i in 0..59) {
+            if(i/10 == 0) minList.add("0$i")
+            else minList.add(i.toString())
+        }
+        binding.minutePicker.displayedValues = minList.toTypedArray()
+
+    }
+}
