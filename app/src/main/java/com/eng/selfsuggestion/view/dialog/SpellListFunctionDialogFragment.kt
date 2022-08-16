@@ -41,11 +41,11 @@ class SpellListFunctionDialogFragment(val fragmentId: Int) : DialogFragment() {
                     daily?.docId?.let { it1 ->
                         routineRef.deleteRoutine(it1).observe(requireActivity(),{
                             if (it=="success"){
-                                Toast.makeText(requireContext(), "success delete spell",
-                                    Toast.LENGTH_SHORT).show()
+//                                Toast.makeText(activity, "success delete spell",
+//                                    Toast.LENGTH_SHORT).show()
                             }else{
-                                Toast.makeText(requireContext(), "fail delete spell",
-                                    Toast.LENGTH_SHORT).show()
+//                                Toast.makeText(activity, "fail delete spell",
+//                                    Toast.LENGTH_SHORT).show()
                             }
                         })
                     }
@@ -56,13 +56,13 @@ class SpellListFunctionDialogFragment(val fragmentId: Int) : DialogFragment() {
                     val arriveRef = ArrivedRepository
                     special?.docId?.let { it1 ->
                         arriveRef.deleteArrived(it1).observe(requireActivity(),{
-                            if (it=="success"){
-                                Toast.makeText(context, "success delete spell",
-                                    Toast.LENGTH_SHORT).show()
-                            }else{
-                                Toast.makeText(context, "fail delete spell",
-                                    Toast.LENGTH_SHORT).show()
-                            }
+//                            if (it=="success"){
+//                                Toast.makeText(context, "success delete spell",
+//                                    Toast.LENGTH_SHORT).show()
+//                            }else{
+//                                Toast.makeText(context, "fail delete spell",
+//                                    Toast.LENGTH_SHORT).show()
+//                            }
                         })
                     }
                     dialog?.dismiss()
