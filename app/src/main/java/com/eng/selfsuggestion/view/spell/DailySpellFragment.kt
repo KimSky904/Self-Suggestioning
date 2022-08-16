@@ -34,7 +34,7 @@ class DailySpellFragment : Fragment() {
         _binding = FragmentDailySpellBinding.inflate(inflater, container, false)
 
         val scopeIO = CoroutineScope(Dispatchers.IO)
-        val dailyadapter = DailySpellAdapter(context,parentFragmentManager)
+        val dailyadapter = DailySpellAdapter(context,requireActivity(),parentFragmentManager)
 
         // get all routines array
         scopeIO.launch {
