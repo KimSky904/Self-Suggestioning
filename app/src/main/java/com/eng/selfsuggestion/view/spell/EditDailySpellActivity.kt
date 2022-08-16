@@ -22,11 +22,9 @@ class EditDailySpellActivity : AppCompatActivity() {
         val docId = intent.getStringExtra("docId")
         val content = intent.getStringExtra("content")
 
-        // TODO : 기존 spell name 불러오기
-         binding.edittextSpellName.hint = content
+        binding.edittextSpellName.setText(content)
 
         binding.btnSave.setOnClickListener {
-            // TODO : Edit (binding.edittextSpellName.text)
             val routineRef = RoutineRepository
             if (docId != null) {
                 routineRef.modifyRoutine(mapOf<String,Any>(
@@ -36,6 +34,7 @@ class EditDailySpellActivity : AppCompatActivity() {
                         Toast.makeText(this, "success modify spell",
                             Toast.LENGTH_SHORT).show()
                         finish()
+                        overridePendingTransition(R.anim.translate_none, R.anim.translate_none)
                     }else{
                         Toast.makeText(this, "fail modify spell",
                             Toast.LENGTH_SHORT).show()
@@ -43,9 +42,11 @@ class EditDailySpellActivity : AppCompatActivity() {
                 })
             }
             finish()
+            overridePendingTransition(R.anim.translate_none, R.anim.translate_none)
         }
         binding.btnCancel.setOnClickListener {
             finish()
+            overridePendingTransition(R.anim.translate_none, R.anim.translate_none)
         }
 
 

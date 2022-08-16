@@ -74,6 +74,7 @@ class InfoSpellActivity : AppCompatActivity() {
                 intent.putExtra("docId",docId)
                 intent.putExtra("content",content)
                 startActivity(intent)
+                overridePendingTransition(R.anim.translate_none, R.anim.translate_none)
             }
             R.id.menu_delete -> {
                 // 삭제하기
@@ -83,6 +84,7 @@ class InfoSpellActivity : AppCompatActivity() {
                             Toast.makeText(this, "success delete spell",
                                 Toast.LENGTH_SHORT).show()
                             finish()
+                            overridePendingTransition(R.anim.translate_none, R.anim.translate_none)
                         }else{
                             Toast.makeText(this, "fail delete spell",
                                 Toast.LENGTH_SHORT).show()
@@ -102,5 +104,6 @@ class InfoSpellActivity : AppCompatActivity() {
     // 돌아가기
     fun finishActivity(view : View){
         finish()
+        overridePendingTransition(R.anim.translate_none, R.anim.translate_none)
     }
 }

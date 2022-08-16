@@ -1,5 +1,6 @@
 package com.eng.selfsuggestion.adapter
 
+import android.app.Activity
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
@@ -17,11 +18,10 @@ import com.eng.selfsuggestion.view.dialog.SpellListFunctionDialogFragment
 import com.eng.selfsuggestion.view.spell.InfoSpellActivity
 import java.text.SimpleDateFormat
 
-class DailySpellAdapter(private val context : Context?, private val fragmentManager: FragmentManager,) : RecyclerView.Adapter<DailySpellAdapter.ViewHolder>() {
+class DailySpellAdapter(private val context : Context?, private val activity : Activity, private val fragmentManager: FragmentManager,) : RecyclerView.Adapter<DailySpellAdapter.ViewHolder>() {
 
     private var dailyList: ArrayList<RoutineModel> = ArrayList()
 
-    // TODO : 위의 List<TestingModel> specialList 적용필요
     inner class ViewHolder(view : View) : RecyclerView.ViewHolder(view) {
 
         private val titleText : TextView = itemView.findViewById(R.id.txt_item_title)
@@ -57,6 +57,7 @@ class DailySpellAdapter(private val context : Context?, private val fragmentMana
             Log.i(TAG, "onBindViewHolder: 어댑터 카운트"+dailyList[position].count)
             intent.putExtra("docId", dailyList[position].docId)
             context!!.startActivity(intent)
+            activity.overridePendingTransition(R.anim.translate_none,R.anim.translate_none)
         }
     }
 

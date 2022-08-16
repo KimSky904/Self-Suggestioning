@@ -113,7 +113,7 @@ class ListFragment : Fragment() {
             }
             1 -> {
                 if(isDaily) {
-                    ObjectAnimator.ofFloat(_binding.movingIndicator, "translationX", 420f).apply {
+                    ObjectAnimator.ofFloat(_binding.movingIndicator, "translationX", 450f).apply {
                         duration = 500
                         _binding.viewPager.currentItem = 1
                         start()

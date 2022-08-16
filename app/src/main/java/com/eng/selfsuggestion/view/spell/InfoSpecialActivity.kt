@@ -7,6 +7,8 @@ import android.util.Log
 import android.view.*
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.eng.selfsuggestion.R
 import com.eng.selfsuggestion.databinding.ActivityInfoSpecialBinding
@@ -24,6 +26,12 @@ class InfoSpecialActivity : AppCompatActivity() {
 
     lateinit var binding : ActivityInfoSpecialBinding
     private lateinit var scopeIO : CoroutineScope
+    val resultLuncher : ActivityResultLauncher<Intent> by lazy {
+        registerForActivityResult(
+            ActivityResultContracts.StartActivityForResult()){
+            content = it.data?.getStringExtra("result")
+        }
+    }
 
     var content : String? = null
     var date : String? = null
@@ -76,7 +84,9 @@ class InfoSpecialActivity : AppCompatActivity() {
                 intent.putExtra("docId",docId)
                 intent.putExtra("content",content)
                 intent.putExtra("arriveday",arriveday)
-                startActivity(intent)
+
+                resultLuncher.launch(intent)
+                overridePendingTransition(R.anim.translate_none, R.anim.translate_none)
             }
             R.id.menu_delete -> {
                 // 삭제하기
@@ -86,6 +96,7 @@ class InfoSpecialActivity : AppCompatActivity() {
                             Toast.makeText(this, "success delete spell",
                                 Toast.LENGTH_SHORT).show()
                             finish()
+                            overridePendingTransition(R.anim.translate_none, R.anim.translate_none)
                         }else{
                             Toast.makeText(this, "fail delete spell",
                                 Toast.LENGTH_SHORT).show()
@@ -105,5 +116,7 @@ class InfoSpecialActivity : AppCompatActivity() {
     // 돌아가기
     fun finishActivity(view : View){
         finish()
+        overridePendingTransition(R.anim.translate_none, R.anim.translate_none)
     }
+
 }

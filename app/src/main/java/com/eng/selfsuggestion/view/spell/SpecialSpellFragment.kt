@@ -38,7 +38,7 @@ class SpecialSpellFragment : Fragment() {
         _binding = FragmentSpecialSpellBinding.inflate(inflater, container, false)
 
         val scopeIO = CoroutineScope(Dispatchers.IO)
-        val specialadapter = SpecialSpellAdapter(context, parentFragmentManager )
+        val specialadapter = SpecialSpellAdapter(context, requireActivity(), parentFragmentManager)
 
         // get all routines array
         scopeIO.launch {

@@ -3,6 +3,9 @@ package com.eng.selfsuggestion.view.navigation
 import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.SharedPreferences
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
+import android.graphics.drawable.Drawable
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -37,7 +40,6 @@ class HomeFragment : Fragment() {
         _binding.btnWriteSpell.setOnClickListener {
             val dialogFragment = WriteSpellDialogFragment()
             dialogFragment.show(parentFragmentManager, "WriteSpellDialogFragment")
-
         }
         scopeIO = CoroutineScope(Dispatchers.IO)
         return _binding.root
@@ -54,6 +56,9 @@ class HomeFragment : Fragment() {
         // if routine size zero
         routineRef.getRoutineSize().observe(requireActivity(),{
             _binding.btnWriteSpell.isEnabled = it > 0
+            if(it == 0) {
+                _binding.btnWriteSpell.setBackgroundResource(R.drawable.background_btn_ellipse_3)
+            }
         })
 
         // random daily
@@ -92,7 +97,7 @@ class HomeFragment : Fragment() {
                     sendingRef.getRandomSending().observe(requireActivity(), {
                         val special_other = it
                         _binding.txtDailySpell.text = special_other.content
-                        _binding.dailySubMessage.text = R.string.home_from_anonymous.toString()
+                        _binding.dailySubMessage.text = "from_anonymous"
                         Log.i(TAG, "onViewCreated: 스페셜" + special_other)
                     })
                 } else {
@@ -103,7 +108,7 @@ class HomeFragment : Fragment() {
 
                         // 오늘 온 메세지 내용을 보여준다.
                         _binding.txtDailySpell.text = special.content
-                        _binding.dailySubMessage.text = R.string.home_from_me.toString()
+                        _binding.dailySubMessage.text = "from_me"
                         Log.i(TAG, "onViewCreated: d오늘온거" + special)
                     })
                 }

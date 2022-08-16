@@ -1,5 +1,7 @@
 package com.eng.selfsuggestion.view.spell
 
+import android.app.Activity
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +10,7 @@ import com.eng.selfsuggestion.R
 import com.eng.selfsuggestion.databinding.ActivityEditSpecialSpellBinding
 import com.eng.selfsuggestion.repository.ArrivedRepository
 import com.eng.selfsuggestion.view.dialog.SelectDateDialogFragment
+import com.eng.selfsuggestion.view.navigation.BaseActivity
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import java.text.SimpleDateFormat
@@ -24,13 +27,19 @@ class EditSpecialSpellActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val intent = intent
+
+        intent.putExtra("result",binding.edittextSpellName.text.toString())
+
         val docId = intent.getStringExtra("docId")
         val content = intent.getStringExtra("content")
         val arriveday = intent.getStringExtra("arriveday")
 
         // 이전 데이터 보여주기
-        binding.edittextSpellName.hint = content
+        binding.edittextSpellName.setText(content)
         binding.txtSpellDate.text = arriveday
+        if (arriveday != null) {
+            targetdate = arriveday
+        }
 
         Log.i("TAG", "onCreate: 스페셜 이전 데이터"+content+arriveday)
 
@@ -46,7 +55,6 @@ class EditSpecialSpellActivity : AppCompatActivity() {
         }
 
         binding.btnSave.setOnClickListener {
-            // TODO : Edit(binding.edittextSpellName.text, ...)
             val arriveRef = ArrivedRepository
             if (docId != null) {
                 arriveRef.modifyArrived(mapOf<String,Any>(
@@ -57,16 +65,20 @@ class EditSpecialSpellActivity : AppCompatActivity() {
                         Toast.makeText(this, "success modify spell",
                             Toast.LENGTH_SHORT).show()
                         finish()
+                        overridePendingTransition(R.anim.translate_none, R.anim.translate_none)
                     }else{
                         Toast.makeText(this, "fail modify spell",
                             Toast.LENGTH_SHORT).show()
                     }
                 })
             }
+            setResult(Activity.RESULT_OK)
             finish()
+            overridePendingTransition(R.anim.translate_none, R.anim.translate_none)
         }
         binding.btnCancel.setOnClickListener {
             finish()
+            overridePendingTransition(R.anim.translate_none, R.anim.translate_none)
         }
 
     }

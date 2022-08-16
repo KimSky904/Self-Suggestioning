@@ -1,5 +1,6 @@
 package com.eng.selfsuggestion.adapter
 
+import android.app.Activity
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
@@ -19,7 +20,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class SpecialSpellAdapter(private val context : Context?, private val fragmentManager: FragmentManager) : RecyclerView.Adapter<SpecialSpellAdapter.ViewHolder>() {
+class SpecialSpellAdapter(private val context : Context?, private val activity : Activity, private val fragmentManager: FragmentManager) : RecyclerView.Adapter<SpecialSpellAdapter.ViewHolder>() {
 
     private var specialList: ArrayList<ArrivedModel> = ArrayList()
 
@@ -59,6 +60,7 @@ class SpecialSpellAdapter(private val context : Context?, private val fragmentMa
             Log.i(ContentValues.TAG, "onBindViewHolder: 어댑터 카운트"+specialList[position].arriveday)
             intent.putExtra("docId", specialList[position].docId)
             context!!.startActivity(intent)
+            activity.overridePendingTransition(R.anim.translate_none, R.anim.translate_none)
         }
     }
 
