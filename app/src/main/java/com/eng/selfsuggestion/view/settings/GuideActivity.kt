@@ -2,6 +2,7 @@ package com.eng.selfsuggestion.view.settings
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.eng.selfsuggestion.R
 import com.eng.selfsuggestion.databinding.ActivityGuideBinding
 
 class GuideActivity : AppCompatActivity() {
@@ -15,8 +16,12 @@ class GuideActivity : AppCompatActivity() {
 
         binding.btnBack.setOnClickListener {
             finish()
+            overridePendingTransition(R.anim.translate_none, R.anim.translate_none)
         }
+    }
 
-
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(R.anim.translate_none, R.anim.translate_none)
     }
 }

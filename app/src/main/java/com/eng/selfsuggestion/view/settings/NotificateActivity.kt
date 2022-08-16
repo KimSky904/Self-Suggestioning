@@ -123,6 +123,7 @@ class NotificateActivity : AppCompatActivity() {
             Log.i(TAG, "initView: notification save"+pref.getBoolean("alarm",false))
 
             finish()
+            overridePendingTransition(R.anim.translate_none,R.anim.translate_none)
         }
     }
 
@@ -174,7 +175,7 @@ class NotificateActivity : AppCompatActivity() {
         Toast.makeText(this@NotificateActivity,"Setting Alarm Time",Toast.LENGTH_SHORT).show()
     }
 
-    fun initNotification(){
+    private fun initNotification(){
 
         Log.i(TAG, "initNotification: 원래 상태 "+pref.getBoolean("alarm",false))
         if(!pref.getBoolean("alarm",false)) {
@@ -208,7 +209,12 @@ class NotificateActivity : AppCompatActivity() {
         }
     }
 
-    fun alarmCencel(){
+    private fun alarmCencel(){
         alarmMgr?.cancel(alarmIntent)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(R.anim.translate_none, R.anim.translate_none)
     }
 }
