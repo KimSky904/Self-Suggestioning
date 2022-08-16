@@ -23,6 +23,7 @@ class AddSpecialSpellActivity : AppCompatActivity() {
     private lateinit var binding : ActivityAddSpecialSpellBinding
     private lateinit var targetdate : String
     private lateinit var scopeIO : CoroutineScope
+    var timedialog = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +39,7 @@ class AddSpecialSpellActivity : AppCompatActivity() {
                 targetdate = SimpleDateFormat("yyyy/MM/dd").format(content)
             }
             dialogFragment.show(supportFragmentManager, "SelectDateDialogFragment")
+            timedialog = true
         }
 
         binding.btnCancel.setOnClickListener {
@@ -46,6 +48,10 @@ class AddSpecialSpellActivity : AppCompatActivity() {
         }
 
         binding.btnSave.setOnClickListener {
+            if(!timedialog){
+                Toast.makeText(this, "please add daily-mindspell",Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             if(binding.edittextSpellName.text.isNotBlank()) {
                 val spellName = binding.edittextSpellName.text
                 Log.i("TAG", "onCreate: 생성 스페셜엑티비티 날짜"+targetdate)
