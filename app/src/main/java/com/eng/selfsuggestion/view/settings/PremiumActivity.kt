@@ -3,10 +3,20 @@ package com.eng.selfsuggestion.view.settings
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.eng.selfsuggestion.R
+import com.eng.selfsuggestion.databinding.ActivityPremiumBinding
 
 class PremiumActivity : AppCompatActivity() {
+
+    lateinit var binding : ActivityPremiumBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_premium)
+        binding = ActivityPremiumBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.btnBack.setOnClickListener{
+            finish()
+        }
+
     }
 }
