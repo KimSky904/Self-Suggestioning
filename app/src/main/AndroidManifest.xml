@@ -12,6 +12,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Ssuggestioning">
         <activity
+            android:name=".view.settings.GuideActivity"
+            android:exported="false" />
+        <activity
             android:name=".view.spell.EditSpecialSpellActivity"
             android:exported="false" />
         <activity
