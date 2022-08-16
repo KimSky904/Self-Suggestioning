@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Ssuggestioning</string>
+    <string name="app_name">MindSpell</string>
     <string name="channel_name">useralarmtime</string>
     <string name="channel_description">magic time setting</string>
     <string name="info_spell_title">My Spell</string>
