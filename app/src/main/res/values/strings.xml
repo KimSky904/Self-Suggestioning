@@ -4,4 +4,6 @@
     <string name="channel_description">magic time setting</string>
     <string name="info_spell_title">My Spell</string>
     <string name="sheets_count">How many</string>
+    <string name="home_from_anonymous">from_anonymous</string>
+    <string name="home_from_me">from_me</string>
 </resources>

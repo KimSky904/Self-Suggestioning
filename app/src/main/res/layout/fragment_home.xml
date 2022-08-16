@@ -199,9 +199,10 @@
                 app:layout_constraintBottom_toTopOf="@id/guideline_inline_box_2"/>
 
             <TextView
+                android:id="@+id/daily_sub_message"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="From Anonymous"
+                android:text="@string/home_from_anonymous"
                 android:fontFamily="@font/noto_sans_kr_light"
                 android:textSize="13sp"
                 android:textColor="@color/gray"

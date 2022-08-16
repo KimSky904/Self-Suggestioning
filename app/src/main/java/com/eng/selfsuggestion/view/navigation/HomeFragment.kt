@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.eng.selfsuggestion.R
 import com.eng.selfsuggestion.databinding.FragmentHomeBinding
 import com.eng.selfsuggestion.repository.ArrivedRepository
 import com.eng.selfsuggestion.repository.RoutineRepository
@@ -50,6 +51,11 @@ class HomeFragment : Fragment() {
         val sendingRef = SendingRepository
         pref = context?.getSharedPreferences("pref", Context.MODE_PRIVATE)!!
 
+        // if routine size zero
+        routineRef.getRoutineSize().observe(requireActivity(),{
+            _binding.btnWriteSpell.isEnabled = it > 0
+        })
+
         // random daily
         routineRef.getRandomRoutine().observe(requireActivity(), {
             val routines = it
@@ -86,6 +92,7 @@ class HomeFragment : Fragment() {
                     sendingRef.getRandomSending().observe(requireActivity(), {
                         val special_other = it
                         _binding.txtDailySpell.text = special_other.content
+                        _binding.dailySubMessage.text = R.string.home_from_anonymous.toString()
                         Log.i(TAG, "onViewCreated: 스페셜" + special_other)
                     })
                 } else {
@@ -96,6 +103,7 @@ class HomeFragment : Fragment() {
 
                         // 오늘 온 메세지 내용을 보여준다.
                         _binding.txtDailySpell.text = special.content
+                        _binding.dailySubMessage.text = R.string.home_from_me.toString()
                         Log.i(TAG, "onViewCreated: d오늘온거" + special)
                     })
                 }

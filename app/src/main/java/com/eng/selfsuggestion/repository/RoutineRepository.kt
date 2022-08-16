@@ -69,6 +69,27 @@ object RoutineRepository {
     }
 
 
+    // get routine list size
+    fun getRoutineSize(): MutableLiveData<Int> {
+        val size = MutableLiveData<Int>()
+
+        scopeIO.launch {
+            auth.uid?.let {
+                db.collection("routine")
+                    .document(it).collection("users")
+                    .orderBy("timestamp")
+                    .addSnapshotListener(EventListener { value, error ->
+                        if (value != null) {
+                            size.postValue(value.size())
+                        }
+                    })
+
+            }
+        }
+
+        return size
+    }
+
     // get random routine : return random elements list
     fun getRandomRoutine(): MutableLiveData<ArrayList<RoutineModel>> {
         val Liveroutines = MutableLiveData<ArrayList<RoutineModel>>()
@@ -76,8 +97,8 @@ object RoutineRepository {
         Log.i(TAG, "getRandomRoutine: routines 루틴 가져오는 함수")
 
         scopeIO.launch {
-            RoutineRepository.auth.uid?.let {
-                RoutineRepository.db.collection("routine")
+            auth.uid?.let {
+                db.collection("routine")
                     .document(it).collection("users")
                     .orderBy("timestamp")
                     .addSnapshotListener(EventListener { value, error ->
