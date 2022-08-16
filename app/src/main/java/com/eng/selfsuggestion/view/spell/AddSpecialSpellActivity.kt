@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.util.Log
 import android.widget.TimePicker
 import android.widget.Toast
+import com.eng.selfsuggestion.R
 import com.eng.selfsuggestion.databinding.ActivityAddSpecialSpellBinding
 import com.eng.selfsuggestion.repository.ArrivedRepository
 import com.eng.selfsuggestion.repository.RoutineRepository
@@ -41,40 +42,47 @@ class AddSpecialSpellActivity : AppCompatActivity() {
 
         binding.btnCancel.setOnClickListener {
             finish()
+            overridePendingTransition(R.anim.translate_none, R.anim.translate_none)
         }
 
         binding.btnSave.setOnClickListener {
-            // spell_name : spell name
-            // time_picker : 사용자가 입력한 Date, 위에서 형변환 필요
-            val spellName = binding.edittextSpellName.text
-            Log.i("TAG", "onCreate: 생성 스페셜엑티비티 날짜"+targetdate)
-            if(!spellName.isBlank() && targetdate != null) {
-                // TODO : firebase에 저장~!
-                val auth = FirebaseAuth.getInstance()
-                val date = Calendar.getInstance().time
+            if(binding.edittextSpellName.text.isNotBlank()) {
+                val spellName = binding.edittextSpellName.text
+                Log.i("TAG", "onCreate: 생성 스페셜엑티비티 날짜"+targetdate)
+                if(!spellName.isBlank() && targetdate != null) {
+                    val auth = FirebaseAuth.getInstance()
+                    val date = Calendar.getInstance().time
 
-                val data = mapOf<String,Any>(
-                    "content" to binding.edittextSpellName.text.toString(),
-                    "timestamp" to date,
-                    "arrivedate" to targetdate,
-                    "uid" to auth.uid.toString()
-                )
+                    val data = mapOf<String,Any>(
+                        "content" to binding.edittextSpellName.text.toString(),
+                        "timestamp" to date,
+                        "arrivedate" to targetdate,
+                        "uid" to auth.uid.toString()
+                    )
 
-                // create firebase specialspell
-                val arriveRef = ArrivedRepository
-                arriveRef.createArrived(data).observe(this@AddSpecialSpellActivity,{
-                    if (it=="success"){
-                        Toast.makeText(this@AddSpecialSpellActivity, "success send your spell",
-                            Toast.LENGTH_SHORT).show()
-                        finish()
-                    }else{
-                        Toast.makeText(this@AddSpecialSpellActivity, "fail send your spell",
-                            Toast.LENGTH_SHORT).show()
-                    }
+                    // create firebase specialspell
+                    val arriveRef = ArrivedRepository
+                    arriveRef.createArrived(data).observe(this@AddSpecialSpellActivity,{
+                        if (it=="success"){
+                            Toast.makeText(this@AddSpecialSpellActivity, "success send your spell",
+                                Toast.LENGTH_SHORT).show()
+                            finish()
+                            overridePendingTransition(R.anim.translate_none,R.anim.translate_none)
+                        }else{
+                            Toast.makeText(this@AddSpecialSpellActivity, "fail send your spell",
+                                Toast.LENGTH_SHORT).show()
+                        }
 
-                })
-
+                    })
+                } else {
+                    Toast.makeText(this@AddSpecialSpellActivity, "please make your spell",
+                        Toast.LENGTH_SHORT).show()
+                }
             }
         }
+    }
+
+    override fun onBackPressed() {
+        return
     }
 }

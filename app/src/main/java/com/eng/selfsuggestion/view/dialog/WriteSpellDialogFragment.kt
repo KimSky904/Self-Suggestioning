@@ -32,11 +32,6 @@ class WriteSpellDialogFragment : DialogFragment() {
         _binding = FragmentWriteSpellDialogBinding.inflate(inflater, container, false)
         dialog?.window?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-        /*
-          TODO : 오늘의 Spell FIREBASE 연동
-          _binding.txtSpell.text =
-          _binding.edittxtSpell.text =
-         */
         val docId = pref.getString("docId", "")
         val routineRef = RoutineRepository
         var daily : RoutineModel? = null
