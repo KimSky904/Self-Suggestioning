@@ -29,16 +29,19 @@ class SettingFragment : Fragment() {
             val intent = Intent(activity, NotificateActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
             startActivity(intent)
+            activity?.overridePendingTransition(R.anim.translate_none,R.anim.translate_none)
         }
         _binding.itemPremium.setOnClickListener {
             val intent = Intent(activity, PremiumActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
             startActivity(intent)
+            activity?.overridePendingTransition(R.anim.translate_none,R.anim.translate_none)
         }
         _binding.moveGuide.setOnClickListener {
             val intent = Intent(activity, GuideActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP)
             startActivity(intent)
+            activity?.overridePendingTransition(R.anim.translate_none,R.anim.translate_none)
         }
 
         return _binding.root
