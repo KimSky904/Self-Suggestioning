@@ -16,6 +16,8 @@ import com.eng.selfsuggestion.model.ArrivedModel
 import com.eng.selfsuggestion.view.dialog.SpellListFunctionDialogFragment
 import com.eng.selfsuggestion.view.spell.InfoSpecialActivity
 import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class SpecialSpellAdapter(private val context : Context?, private val fragmentManager: FragmentManager) : RecyclerView.Adapter<SpecialSpellAdapter.ViewHolder>() {
 
@@ -29,8 +31,9 @@ class SpecialSpellAdapter(private val context : Context?, private val fragmentMa
         private val btnMore : ImageView = itemView.findViewById(R.id.icon_more)
 
         fun bind(item : ArrivedModel) {
+            val arrivedate : Date = SimpleDateFormat("yyyy/MM/dd").parse(item.arriveday)
             titleText.text = item.content
-            dateText.text = SimpleDateFormat("yyyy-MM-dd").format(item.timestamp)
+            dateText.text = SimpleDateFormat("yyyy-MM-dd").format(arrivedate)
             btnMore.setOnClickListener {
                 val adapter = SpellListFunctionDialogFragment(1)
                 adapter.setArrived(item)
