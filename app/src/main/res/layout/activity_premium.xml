@@ -114,6 +114,14 @@
         app:layout_constraintTop_toTopOf="@id/icon_list_item_2"
         app:layout_constraintBottom_toBottomOf="@id/icon_list_item_2"/>
 
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_premium_charec"
+        app:layout_constraintBottom_toTopOf="@+id/guideline_bottom"
+        app:layout_constraintEnd_toStartOf="@+id/guideline_inner_right" />
+
     <View
         android:layout_width="0dp"
         android:layout_height="0.7dp"
