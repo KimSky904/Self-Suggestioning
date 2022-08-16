@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -40,10 +41,10 @@ class SpellListFunctionDialogFragment(val fragmentId: Int) : DialogFragment() {
                     daily?.docId?.let { it1 ->
                         routineRef.deleteRoutine(it1).observe(requireActivity(),{
                             if (it=="success"){
-                                Toast.makeText(context, "success delete spell",
+                                Toast.makeText(requireContext(), "success delete spell",
                                     Toast.LENGTH_SHORT).show()
                             }else{
-                                Toast.makeText(context, "fail delete spell",
+                                Toast.makeText(requireContext(), "fail delete spell",
                                     Toast.LENGTH_SHORT).show()
                             }
                         })
@@ -72,16 +73,21 @@ class SpellListFunctionDialogFragment(val fragmentId: Int) : DialogFragment() {
         _binding.btnEdit.setOnClickListener {
             dialog?.dismiss()
             when(fragmentId) {
-                0 -> {
+                0 -> { // daily edit
                     dialog?.dismiss()
                     val intent = Intent(context,EditDailySpellActivity::class.java)
                     intent.putExtra("docId",daily?.docId)
+                    intent.putExtra("content",daily?.content)
                     startActivity(intent)
                 }
-                1 -> {
+                1 -> { // special edit
                     dialog?.dismiss()
                     val intent = Intent(context,EditSpecialSpellActivity::class.java)
                     intent.putExtra("docId",special?.docId)
+                    intent.putExtra("content",special?.content)
+                    intent.putExtra("arriveday",special?.arriveday)
+
+                    Log.i("TAG", "onCreateView: 리스트다이얼 스페셜"+special)
                     startActivity(intent)
                 }
             }
@@ -102,5 +108,6 @@ class SpellListFunctionDialogFragment(val fragmentId: Int) : DialogFragment() {
 
     fun setArrived(item : ArrivedModel){
         special = item
+        Log.i("TAG", "bind: 스페셜 어댑터 설정"+item)
     }
 }

@@ -55,11 +55,12 @@ class SpecialSpellFragment : Fragment() {
                                 messages.add(ArrivedModel(
                                     doc["content"] as String?,
                                     (doc["timestamp"] as Timestamp).toDate(),
-                                    doc["arrviedate"] as String?,
+                                    doc["arrivedate"] as String?,
                                     doc.id
                                 ))
                             }
                             specialadapter.setSpecialList(messages)
+                            Log.i("TAG", "onCreateView: message specialSellFragment"+messages)
                         }
                     })
             }

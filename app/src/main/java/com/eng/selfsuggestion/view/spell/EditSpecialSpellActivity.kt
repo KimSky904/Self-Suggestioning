@@ -2,6 +2,7 @@ package com.eng.selfsuggestion.view.spell
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.eng.selfsuggestion.R
 import com.eng.selfsuggestion.databinding.ActivityEditSpecialSpellBinding
@@ -24,6 +25,14 @@ class EditSpecialSpellActivity : AppCompatActivity() {
 
         val intent = intent
         val docId = intent.getStringExtra("docId")
+        val content = intent.getStringExtra("content")
+        val arriveday = intent.getStringExtra("arriveday")
+
+        // 이전 데이터 보여주기
+        binding.edittextSpellName.hint = content
+        binding.txtSpellDate.text = arriveday
+
+        Log.i("TAG", "onCreate: 스페셜 이전 데이터"+content+arriveday)
 
         binding.txtSpellDate.setOnClickListener {
             val dialogFragment = SelectDateDialogFragment()
@@ -41,7 +50,7 @@ class EditSpecialSpellActivity : AppCompatActivity() {
             val arriveRef = ArrivedRepository
             if (docId != null) {
                 arriveRef.modifyArrived(mapOf<String,Any>(
-                    "content" to binding.edittextSpellName,
+                    "content" to binding.edittextSpellName.text.toString(),
                     "arrivedate" to targetdate
                 ),docId).observe(this,{
                     if (it=="success"){

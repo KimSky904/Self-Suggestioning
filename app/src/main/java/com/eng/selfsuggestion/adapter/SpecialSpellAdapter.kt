@@ -32,8 +32,9 @@ class SpecialSpellAdapter(private val context : Context?, private val fragmentMa
             titleText.text = item.content
             dateText.text = SimpleDateFormat("yyyy-MM-dd").format(item.timestamp)
             btnMore.setOnClickListener {
-                val adapter = SpellListFunctionDialogFragment(0)
+                val adapter = SpellListFunctionDialogFragment(1)
                 adapter.setArrived(item)
+                Log.i("TAG", "bind: 스페셜 어댑터 "+item)
                 val dialogFragment = adapter
                 dialogFragment.show(fragmentManager, "SpellListFunctionDialogFragment")
             }

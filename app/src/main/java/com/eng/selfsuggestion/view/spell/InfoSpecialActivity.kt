@@ -74,6 +74,8 @@ class InfoSpecialActivity : AppCompatActivity() {
                 // 수정하기
                 val intent = Intent(baseContext, EditSpecialSpellActivity::class.java)
                 intent.putExtra("docId",docId)
+                intent.putExtra("content",content)
+                intent.putExtra("arriveday",arriveday)
                 startActivity(intent)
             }
             R.id.menu_delete -> {

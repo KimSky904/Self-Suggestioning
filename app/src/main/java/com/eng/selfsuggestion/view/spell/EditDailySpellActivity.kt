@@ -20,16 +20,17 @@ class EditDailySpellActivity : AppCompatActivity() {
 
         val intent = intent
         val docId = intent.getStringExtra("docId")
+        val content = intent.getStringExtra("content")
 
         // TODO : 기존 spell name 불러오기
-        // binding.txtSpellName.text =
+         binding.edittextSpellName.hint = content
 
         binding.btnSave.setOnClickListener {
             // TODO : Edit (binding.edittextSpellName.text)
             val routineRef = RoutineRepository
             if (docId != null) {
                 routineRef.modifyRoutine(mapOf<String,Any>(
-                    "content" to binding.edittextSpellName,
+                    "content" to binding.edittextSpellName.text.toString()
                 ),docId).observe(this,{
                     if (it=="success"){
                         Toast.makeText(this, "success modify spell",

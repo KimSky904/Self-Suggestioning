@@ -112,7 +112,7 @@ object RoutineRepository {
                     .document(it).collection("users")
                     .document(docId)
                     .update(mapOf(
-                        "content" to data["content"],
+                        "content" to data["content"]
                     )).addOnSuccessListener {
                         result.postValue("success")
                         Log.i(ContentValues.TAG, "ModifyRoutine: success update routine")

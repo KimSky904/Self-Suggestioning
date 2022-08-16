@@ -72,6 +72,7 @@ class InfoSpellActivity : AppCompatActivity() {
                 // 수정하기
                 val intent = Intent(baseContext, EditDailySpellActivity::class.java)
                 intent.putExtra("docId",docId)
+                intent.putExtra("content",content)
                 startActivity(intent)
             }
             R.id.menu_delete -> {
