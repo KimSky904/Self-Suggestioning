@@ -1,6 +1,7 @@
 package com.eng.selfsuggestion.view.navigation
 
 import android.animation.ObjectAnimator
+import android.content.ContentValues.TAG
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
@@ -23,7 +24,7 @@ class ListFragment : Fragment() {
 
     private lateinit var _binding : FragmentListBinding
     private var isDaily : Boolean = true
-
+    private var isChecked : Boolean = false
     private var isClicked : Boolean = false
     private val rotateOpen : Animation by lazy { AnimationUtils.loadAnimation(context, R.anim.rotate_open_anim) }
     private val rotateClose : Animation by lazy { AnimationUtils.loadAnimation(context, R.anim.rotate_close_anim) }
@@ -43,39 +44,35 @@ class ListFragment : Fragment() {
 
         val adapter = activity?.let { ViewPagerAdapter(it) }
         _binding.viewPager.adapter = adapter
+        _binding.viewPager.bringToFront()
         _binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab?) {}
-            override fun onTabUnselected(tab: TabLayout.Tab?) {}
-            override fun onTabReselected(tab: TabLayout.Tab?) {
-                _binding.viewPager.currentItem = tab!!.position
+            override fun onTabSelected(tab: TabLayout.Tab?) {
+                var positionValue = tab!!.position
+                when(positionValue) {
+                    0 -> Log.e("TAG", "Daily Selected")
+                    1 -> Log.e("TAG", "Special Selected")
+                }
+                moveIndicator(positionValue)
+                _binding.viewPager.postDelayed({
+                    _binding.viewPager.currentItem = positionValue
+                }, 550)
             }
+            override fun onTabUnselected(tab: TabLayout.Tab?) {}
+            override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
 
-        // TODO : DELETE
-        _binding.btnTest.setOnClickListener {
-            if(isDaily) {
-                ObjectAnimator.ofFloat(_binding.movingIndicator, "translationX", 420f).apply {
-                    duration = 1000
-                    start()
-                }
-                _binding.btnTest.postDelayed({
-                    _binding.txtIndicatorDaily.setTextColor(Color.BLACK)
-                    _binding.txtIndicatorSpecial.setTextColor(Color.WHITE)
-                }, 450)
+        TabLayoutMediator(_binding.tabLayout, _binding.viewPager) {
+            _, position -> moveIndicator(position)
+            Log.e("TAG", "Something Slided")
+        }.attach()
 
-                isDaily = !isDaily
-            } else {
-                ObjectAnimator.ofFloat(_binding.movingIndicator, "translationX", 0f).apply {
-                    duration = 1000
-                    start()
-                }
-                _binding.btnTest.postDelayed({
-                    _binding.txtIndicatorDaily.setTextColor(Color.WHITE)
-                    _binding.txtIndicatorSpecial.setTextColor(Color.BLACK)
-                }, 450)
-                isDaily = !isDaily
-            }
-
+        _binding.txtIndicatorSpecial.setOnClickListener {
+            Log.e("TAG", "Special Clicked")
+            moveIndicator(1)
+        }
+        _binding.txtIndicatorDaily.setOnClickListener {
+            Log.e("TAG", "Daily Clicked")
+            moveIndicator(0)
         }
 
         _binding.btnFloatingAction.setOnClickListener {
@@ -103,6 +100,40 @@ class ListFragment : Fragment() {
 
 
         return _binding.root
+    }
+
+    private fun moveIndicator(position: Int) {
+        when(position) {
+            0 -> {
+                if(!isDaily) {
+                    ObjectAnimator.ofFloat(_binding.movingIndicator, "translationX", 0f).apply {
+                        duration = 600
+                        _binding.viewPager.currentItem = 0
+                        start()
+                    }
+                    _binding.txtIndicatorDaily.postDelayed({
+                        _binding.txtIndicatorDaily.setTextColor(Color.WHITE)
+                        _binding.txtIndicatorSpecial.setTextColor(Color.BLACK)
+                    }, 350)
+                    isDaily = !isDaily
+                }
+            }
+            1 -> {
+                if(isDaily) {
+                    ObjectAnimator.ofFloat(_binding.movingIndicator, "translationX", 420f).apply {
+                        duration = 600
+                        _binding.viewPager.currentItem = 1
+                        start()
+                    }
+                    _binding.txtIndicatorSpecial.postDelayed({
+                        _binding.txtIndicatorDaily.setTextColor(Color.BLACK)
+                        _binding.txtIndicatorSpecial.setTextColor(Color.WHITE)
+                    }, 350)
+
+                    isDaily = !isDaily
+                }
+            }
+        }
     }
 
     private fun onAddButtonClicked() {
@@ -148,6 +179,7 @@ class ListFragment : Fragment() {
             _binding.btnFloatingAction.startAnimation(rotateClose)
         }
     }
+
 }
 
 private class ViewPagerAdapter(

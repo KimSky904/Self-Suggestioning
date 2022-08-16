@@ -49,13 +49,13 @@ class NotificateActivity : AppCompatActivity() {
                     // time set 비활성화
                     binding.boxTimeSet.visibility = View.INVISIBLE
                     binding.boxTimeSet.startAnimation(toBottom)
-                    duration = 1000
+                    duration = 600
                     start()
                 }
                 binding.txtIndicatorOff.postDelayed({
                     binding.txtIndicatorOn.setTextColor(Color.BLACK)
                     binding.txtIndicatorOff.setTextColor(Color.WHITE)
-                }, 450)
+                }, 350)
 
                 isStateOn = !isStateOn
             }
@@ -66,13 +66,13 @@ class NotificateActivity : AppCompatActivity() {
                     // time set 활성화
                     binding.boxTimeSet.visibility = View.VISIBLE
                     binding.boxTimeSet.startAnimation(fromBottom)
-                    duration = 1000
+                    duration = 600
                     start()
                 }
                 binding.txtIndicatorOn.postDelayed({
                     binding.txtIndicatorOff.setTextColor(Color.BLACK)
                     binding.txtIndicatorOn.setTextColor(Color.WHITE)
-                }, 450)
+                }, 350)
 
                 isStateOn = !isStateOn
             }

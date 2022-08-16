@@ -11,21 +11,35 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.1" />
+        app:layout_constraintGuide_percent="0.07" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_right"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.9" />
+        app:layout_constraintGuide_percent="0.93" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_inner_left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.22" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline_inner_right"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.78" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_top"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        app:layout_constraintGuide_percent="0.1" />
+        app:layout_constraintGuide_percent="0.05" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/guideline_bottom"
@@ -34,16 +48,23 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_percent="0.85" />
 
-    <TextView
+    <ImageView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="APP NAME"
-        android:textSize="25sp"
-        android:fontFamily="@font/noto_sans_kr_bold"
-        app:layout_constraintTop_toBottomOf="@id/guideline_top"
-        app:layout_constraintLeft_toLeftOf="@id/guideline_left"
-        app:layout_constraintRight_toRightOf="@id/guideline_right"
+        android:src="@drawable/ic_splash_title"
+        app:layout_constraintTop_toTopOf="@id/guideline_top"
+        app:layout_constraintLeft_toLeftOf="@id/guideline_inner_left"
+        app:layout_constraintRight_toRightOf="@id/guideline_inner_right"
         android:textAlignment="center"/>
+
+    <ImageView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_splash_graphic"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/guideline_left"
+        app:layout_constraintRight_toRightOf="@id/guideline_right"/>
 
     <Button
         android:id="@+id/btn_sign_in"
