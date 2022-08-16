@@ -31,7 +31,7 @@ object SendingRepository {
                         for(doc in value){
                             sendings.add(SendingModel(
                                 doc["content"] as String?,
-                                doc["timestamp"] as Timestamp,
+                                (doc["timestamp"] as Timestamp).toDate(),
                                 doc["uid"] as String,
                                 doc.id
                             ))
@@ -60,7 +60,7 @@ object SendingRepository {
                             for(doc in value){
                                 sendings.add(SendingModel(
                                     doc["content"] as String?,
-                                    doc["timestamp"] as Timestamp,
+                                    (doc["timestamp"] as Timestamp).toDate(),
                                     doc["uid"] as String,
                                     doc.id
                                 ))
@@ -77,8 +77,18 @@ object SendingRepository {
     }
 
     // create sending
-    suspend fun createSending(data:Map<String, Any>) {
-        db.collection("sending").document().set(data)
+    fun createSending(data:Map<String, Any>): MutableLiveData<String> {
+        val result = MutableLiveData<String>()
+
+        scopeIO.launch {
+            db.collection("sending").document().set(data).addOnSuccessListener {
+                result.postValue("success")
+            }.addOnFailureListener {
+                result.postValue("fail")
+            }
+        }
+
+        return result
     }
 
     // delete sending

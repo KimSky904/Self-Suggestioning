@@ -75,11 +75,13 @@ class SpellListFunctionDialogFragment(val fragmentId: Int) : DialogFragment() {
                 0 -> {
                     dialog?.dismiss()
                     val intent = Intent(context,EditDailySpellActivity::class.java)
+                    intent.putExtra("docId",daily?.docId)
                     startActivity(intent)
                 }
                 1 -> {
                     dialog?.dismiss()
                     val intent = Intent(context,EditSpecialSpellActivity::class.java)
+                    intent.putExtra("docId",special?.docId)
                     startActivity(intent)
                 }
             }

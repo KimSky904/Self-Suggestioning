@@ -81,6 +81,32 @@ object ArrivedRepository {
         return Livemessages
     }
 
+
+    // get today arrive size
+    fun getMessageSize(): MutableLiveData<Int> {
+        Log.i(TAG, "getMessage: 도착한 메세지 가져오기 함수")
+        val size = MutableLiveData<Int>(0)
+        val today = SimpleDateFormat("yyyy/MM/dd").format(Calendar.getInstance().time)
+
+        scopeIO.launch {
+            auth.uid?.let {
+                Log.i(TAG, "getMessage: 도착한 메세지 가져오기 함수 auth"+today)
+
+                db.collection("arrived")
+                    .document(it).collection("users")
+                    .whereEqualTo("arrivedate", today)
+                    .orderBy("timestamp")
+                    .addSnapshotListener(EventListener { value, error ->
+                        if (value != null) {
+                            size.postValue(value.size())
+                            Log.i(TAG, "getMessage: 도착메세지사이즈 "+value.size())
+                        }
+                    })
+            }
+        }
+        return size
+    }
+
     // get single arrive message
     suspend fun getArriveMessage(docId : String): ArrivedModel? {
         var message : ArrivedModel? = null

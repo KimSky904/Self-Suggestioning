@@ -3,6 +3,7 @@ package com.eng.selfsuggestion.view.spell
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.widget.Toast
 import com.eng.selfsuggestion.R
 import com.eng.selfsuggestion.databinding.ActivityAddToOthersSpellBinding
 import com.eng.selfsuggestion.repository.RoutineRepository
@@ -39,11 +40,18 @@ class AddToOthersSpellActivity : AppCompatActivity() {
             )
 
             // network coroutine scope
-            scopeIO.launch {
-                Log.i("TAG", "onCreate: scope IO 실행"+inputData)
-                sendingRef.createSending(inputData)
-            }
-            finish()
+            Log.i("TAG", "onCreate: scope IO 실행"+inputData)
+            sendingRef.createSending(inputData).observe(this,{
+                if (it=="success"){
+                    Toast.makeText(this, "success send other spell",
+                        Toast.LENGTH_SHORT).show()
+                    finish()
+                }else{
+                    Toast.makeText(this, "fail send spell",
+                        Toast.LENGTH_SHORT).show()
+                }
+            })
+
         }
     }
 }
