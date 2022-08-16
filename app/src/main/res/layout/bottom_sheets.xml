@@ -168,7 +168,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:padding="4dp"
-            android:src="@drawable/sheets_date_icon"
+            android:src="@drawable/ic_sheets_count"
             app:layout_constraintEnd_toStartOf="@+id/guideline_txt_left2"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

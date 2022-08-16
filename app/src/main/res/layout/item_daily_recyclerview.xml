@@ -48,7 +48,7 @@
             android:id="@+id/icon_more"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_sample"
+            android:src="@drawable/ic_list_more_horiz"
             app:layout_constraintRight_toRightOf="@id/guideline_right"
             app:layout_constraintTop_toTopOf="@id/txt_item_title"
             app:layout_constraintBottom_toBottomOf="@id/txt_item_title"/>
@@ -57,7 +57,7 @@
             android:id="@+id/img_item_clock"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_sample"
+            android:src="@drawable/ic_daily_time"
             android:layout_marginTop="5dp"
             app:layout_constraintLeft_toLeftOf="@id/guideline_left"
             app:layout_constraintTop_toTopOf="@id/guideline_middle"/>
