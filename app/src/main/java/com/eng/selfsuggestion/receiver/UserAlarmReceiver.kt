@@ -20,7 +20,6 @@ class UserAlarmReceiver : BroadcastReceiver() {
 
     override fun onReceive(context: Context, intent: Intent) {
         // This method is called when the BroadcastReceiver is receiving an Intent broadcast.
-        TODO("UserAlarmReceiver.onReceive() is not implemented")
         val CHANNEL_ID = "UserAlarmTime"
         val NOTIFICATION_ID = 0
         var notificationManager: NotificationManager? = null

@@ -33,7 +33,7 @@ class NotificateActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityNotificateBinding
     private val pref : SharedPreferences by lazy { getSharedPreferences("pref", MODE_PRIVATE) }
-    private var isStateOn : Boolean = true
+    private var isStateOn : Boolean = false
 
     private val fromBottom : Animation by lazy { AnimationUtils.loadAnimation(baseContext, R.anim.from_bottom_anim) }
     private val toBottom : Animation by lazy { AnimationUtils.loadAnimation(baseContext, R.anim.to_bottom_anim) }
@@ -51,6 +51,7 @@ class NotificateActivity : AppCompatActivity() {
 
         setContentView(binding.root)
         initView()
+        initNotification()
 
         // 이전에 설정했던 시간 가져오기
         val hour = pref.getInt("alarmhour",0)
@@ -61,6 +62,8 @@ class NotificateActivity : AppCompatActivity() {
 
         binding.txtIndicatorOff.setOnClickListener {
             if(isStateOn) {
+                Log.i(TAG, "onCreate: isState off")
+
                 ObjectAnimator.ofFloat(binding.movingIndicator, "translationX", 0f).apply {
                     // time set 비활성화
                     binding.boxTimeSet.visibility = View.INVISIBLE
@@ -85,6 +88,7 @@ class NotificateActivity : AppCompatActivity() {
         }
         binding.txtIndicatorOn.setOnClickListener {
             if(!isStateOn) {
+                Log.i(TAG, "onCreate: isState on")
                 ObjectAnimator.ofFloat(binding.movingIndicator, "translationX", 390f).apply {
                     // time set 활성화
                     binding.boxTimeSet.visibility = View.VISIBLE
@@ -111,7 +115,7 @@ class NotificateActivity : AppCompatActivity() {
 
             // on / off, time 저장하기
             with(pref.edit()){
-                putBoolean("alarm",true)
+                putBoolean("alarm",isStateOn)
                 putInt("alarmhour",binding.hourPicker.value)
                 putInt("alarmminute",binding.minutePicker.value)
                 apply()
@@ -123,9 +127,6 @@ class NotificateActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        Log.i(TAG, "initView: notification"+pref.getBoolean("alarm",false))
-        isStateOn = pref.getBoolean("alarm",false)
-
 
         binding.hourPicker.maxValue = 23
         binding.hourPicker.minValue = 0
@@ -171,6 +172,40 @@ class NotificateActivity : AppCompatActivity() {
 
         }
         Toast.makeText(this@NotificateActivity,"Setting Alarm Time",Toast.LENGTH_SHORT).show()
+    }
+
+    fun initNotification(){
+
+        Log.i(TAG, "initNotification: 원래 상태 "+pref.getBoolean("alarm",false))
+        if(!pref.getBoolean("alarm",false)) {
+            ObjectAnimator.ofFloat(binding.movingIndicator, "translationX", 0f).apply {
+                // time set 비활성화
+                binding.boxTimeSet.visibility = View.INVISIBLE
+                binding.boxTimeSet.startAnimation(toBottom)
+                duration = 600
+                start()
+            }
+            binding.txtIndicatorOff.postDelayed({
+                binding.txtIndicatorOn.setTextColor(Color.BLACK)
+                binding.txtIndicatorOff.setTextColor(Color.WHITE)
+            }, 350)
+
+            isStateOn = false
+        }else{
+            ObjectAnimator.ofFloat(binding.movingIndicator, "translationX", 390f).apply {
+                // time set 활성화
+                binding.boxTimeSet.visibility = View.VISIBLE
+                binding.boxTimeSet.startAnimation(fromBottom)
+                duration = 600
+                start()
+            }
+            binding.txtIndicatorOn.postDelayed({
+                binding.txtIndicatorOff.setTextColor(Color.BLACK)
+                binding.txtIndicatorOn.setTextColor(Color.WHITE)
+            }, 350)
+
+            isStateOn = true
+        }
     }
 
     fun alarmCencel(){
