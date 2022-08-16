@@ -35,28 +35,39 @@ class AddDailySpellActivity : AppCompatActivity() {
 
         binding.btnCancel.setOnClickListener {
             finish()
+            overridePendingTransition(R.anim.translate_none,R.anim.translate_none)
         }
 
         binding.btnSave.setOnClickListener {
-            Log.i("TAG", "onCreate: btn clicked"+binding.edittextSpellName.text)
-            // create firebase routine
-            val inputData = mapOf<String, Any>(
-                "content" to binding.edittextSpellName.text.toString(),
-                "count" to 0,
-                "timestamp" to date,
-                "uid" to auth.uid.toString()
-            )
+            if(binding.edittextSpellName.text.isNotBlank()) {
+                Log.i("TAG", "onCreate: btn clicked"+binding.edittextSpellName.text)
+                // create firebase routine
+                val inputData = mapOf<String, Any>(
+                    "content" to binding.edittextSpellName.text.toString(),
+                    "count" to 0,
+                    "timestamp" to date,
+                    "uid" to auth.uid.toString()
+                )
 
 
-            routineRef.createRoutine(inputData).observe(this@AddDailySpellActivity,androidx.lifecycle.Observer{
-                if (it=="success"){
-                    Toast.makeText(this@AddDailySpellActivity, "success make your spell",Toast.LENGTH_SHORT).show()
-                    finish()
-                }else{
-                    Toast.makeText(this@AddDailySpellActivity, "fail make your spell",Toast.LENGTH_SHORT).show()
-                }
-            })
+                routineRef.createRoutine(inputData).observe(this@AddDailySpellActivity,androidx.lifecycle.Observer{
+                    if (it=="success"){
+                        Toast.makeText(this@AddDailySpellActivity, "success make your spell",Toast.LENGTH_SHORT).show()
+                        finish()
+                        overridePendingTransition(R.anim.translate_none,R.anim.translate_none)
+                    }else{
+                        Toast.makeText(this@AddDailySpellActivity, "fail make your spell",Toast.LENGTH_SHORT).show()
+                    }
+                })
+            } else {
+                Toast.makeText(this@AddDailySpellActivity, "please make your spell",Toast.LENGTH_SHORT).show()
+            }
+
         }
 
+    }
+
+    override fun onBackPressed() {
+        return
     }
 }

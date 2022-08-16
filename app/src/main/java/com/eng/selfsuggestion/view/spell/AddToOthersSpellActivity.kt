@@ -30,28 +30,42 @@ class AddToOthersSpellActivity : AppCompatActivity() {
         val sendingRef = SendingRepository
         val date = Calendar.getInstance().time
 
+
         binding.btnSave.setOnClickListener {
-            Log.i("TAG", "onCreate: btn clicked"+binding.edittextSpellName.text)
-            // create firebase routine
-            val inputData = mapOf<String, Any>(
-                "content" to binding.edittextSpellName.text.toString(),
-                "timestamp" to date,
-                "uid" to auth.uid.toString()
-            )
+            if(binding.edittextSpellName.text.isNotBlank()) {
+                Log.i("TAG", "onCreate: btn clicked"+binding.edittextSpellName.text)
+                // create firebase routine
+                val inputData = mapOf<String, Any>(
+                    "content" to binding.edittextSpellName.text.toString(),
+                    "timestamp" to date,
+                    "uid" to auth.uid.toString()
+                )
 
-            // network coroutine scope
-            Log.i("TAG", "onCreate: scope IO 실행"+inputData)
-            sendingRef.createSending(inputData).observe(this,{
-                if (it=="success"){
-                    Toast.makeText(this, "success send other spell",
-                        Toast.LENGTH_SHORT).show()
-                    finish()
-                }else{
-                    Toast.makeText(this, "fail send spell",
-                        Toast.LENGTH_SHORT).show()
-                }
-            })
-
+                // network coroutine scope
+                Log.i("TAG", "onCreate: scope IO 실행"+inputData)
+                sendingRef.createSending(inputData).observe(this,{
+                    if (it=="success"){
+                        Toast.makeText(this, "success send other spell",
+                            Toast.LENGTH_SHORT).show()
+                        finish()
+                        overridePendingTransition(R.anim.translate_none,R.anim.translate_none)
+                    }else{
+                        Toast.makeText(this, "fail send spell",
+                            Toast.LENGTH_SHORT).show()
+                    }
+                })
+            } else {
+                Toast.makeText(this, "please write your spell",
+                    Toast.LENGTH_SHORT).show()
+            }
         }
+        binding.btnCancel.setOnClickListener {
+            finish()
+            overridePendingTransition(R.anim.translate_none,R.anim.translate_none)
+        }
+    }
+
+    override fun onBackPressed() {
+        return
     }
 }
