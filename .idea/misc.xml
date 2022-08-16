@@ -48,13 +48,14 @@
         <entry key="..\:/England/app/src/main/res/layout/fragment_list.xml" value="0.25" />
         <entry key="..\:/England/app/src/main/res/layout/fragment_premium.xml" value="0.17864583333333334" />
         <entry key="..\:/England/app/src/main/res/layout/fragment_select_date_dialog.xml" value="0.33" />
-        <entry key="..\:/England/app/src/main/res/layout/fragment_setting.xml" value="0.25" />
+        <entry key="..\:/England/app/src/main/res/layout/fragment_setting.xml" value="0.4041666666666667" />
         <entry key="..\:/England/app/src/main/res/layout/fragment_special_spell.xml" value="0.3359375" />
         <entry key="..\:/England/app/src/main/res/layout/fragment_spell_list_function_dialog.xml" value="0.5" />
         <entry key="..\:/England/app/src/main/res/layout/fragment_write_spell_dialog.xml" value="0.33" />
         <entry key="..\:/England/app/src/main/res/layout/item_daily_recyclerview.xml" value="0.5" />
         <entry key="..\:/England/app/src/main/res/layout/item_settings_list.xml" value="0.33" />
         <entry key="..\:/England/app/src/main/res/layout/item_special_recyclerview.xml" value="0.2" />
+        <entry key="..\:/England/app/src/main/res/menu/bottom_navigation_menu.xml" value="0.20208333333333334" />
         <entry key="..\:/England/app/src/main/res/menu/menu.xml" value="0.23333333333333334" />
       </map>
     </option>
