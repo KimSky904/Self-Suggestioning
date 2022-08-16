@@ -24,6 +24,7 @@ class ListFragment : Fragment() {
 
     private lateinit var _binding : FragmentListBinding
     private var isDaily : Boolean = true
+    private var isFirst : Boolean = true
     private var isClicked : Boolean = false
     private val rotateOpen : Animation by lazy { AnimationUtils.loadAnimation(context, R.anim.rotate_open_anim) }
     private val rotateClose : Animation by lazy { AnimationUtils.loadAnimation(context, R.anim.rotate_close_anim) }
@@ -44,35 +45,28 @@ class ListFragment : Fragment() {
         val adapter = activity?.let { ViewPagerAdapter(it) }
         _binding.viewPager.adapter = adapter
         _binding.viewPager.bringToFront()
+        moveIndicator(0)
         _binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 var positionValue = tab!!.position
-                when(positionValue) {
-                    0 -> Log.e("TAG", "Daily Selected, $isDaily")
-                    1 -> Log.e("TAG", "Special Selected, $isDaily")
-                }
                 moveIndicator(positionValue)
                 _binding.viewPager.postDelayed({
                     _binding.viewPager.currentItem = positionValue
-                }, 550)
+                }, 150)
             }
             override fun onTabUnselected(tab: TabLayout.Tab?) {}
             override fun onTabReselected(tab: TabLayout.Tab?) {}
         })
 
         TabLayoutMediator(_binding.tabLayout, _binding.viewPager) {
-            _, position -> moveIndicator(position)
-            Log.e("TAG", "Something Slided, $isDaily")
+            _, position ->
+            if(isFirst) {
+                isFirst = false
+                moveIndicator(0)
+            } else {
+                moveIndicator(position)
+            }
         }.attach()
-
-        _binding.txtIndicatorSpecial.setOnClickListener {
-            Log.e("TAG", "Special Clicked, $isDaily")
-            moveIndicator(1)
-        }
-        _binding.txtIndicatorDaily.setOnClickListener {
-            Log.e("TAG", "Daily Clicked, $isDaily")
-            moveIndicator(0)
-        }
 
         _binding.btnFloatingAction.setOnClickListener {
             onAddButtonClicked()
@@ -106,7 +100,7 @@ class ListFragment : Fragment() {
             0 -> {
                 if(!isDaily) {
                     ObjectAnimator.ofFloat(_binding.movingIndicator, "translationX", 0f).apply {
-                        duration = 600
+                        duration = 500
                         _binding.viewPager.currentItem = 0
                         start()
                     }
@@ -120,7 +114,7 @@ class ListFragment : Fragment() {
             1 -> {
                 if(isDaily) {
                     ObjectAnimator.ofFloat(_binding.movingIndicator, "translationX", 420f).apply {
-                        duration = 600
+                        duration = 500
                         _binding.viewPager.currentItem = 1
                         start()
                     }
