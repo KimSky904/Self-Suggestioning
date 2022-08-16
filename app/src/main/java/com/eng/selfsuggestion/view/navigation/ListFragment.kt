@@ -24,7 +24,6 @@ class ListFragment : Fragment() {
 
     private lateinit var _binding : FragmentListBinding
     private var isDaily : Boolean = true
-    private var isChecked : Boolean = false
     private var isClicked : Boolean = false
     private val rotateOpen : Animation by lazy { AnimationUtils.loadAnimation(context, R.anim.rotate_open_anim) }
     private val rotateClose : Animation by lazy { AnimationUtils.loadAnimation(context, R.anim.rotate_close_anim) }
@@ -49,8 +48,8 @@ class ListFragment : Fragment() {
             override fun onTabSelected(tab: TabLayout.Tab?) {
                 var positionValue = tab!!.position
                 when(positionValue) {
-                    0 -> Log.e("TAG", "Daily Selected")
-                    1 -> Log.e("TAG", "Special Selected")
+                    0 -> Log.e("TAG", "Daily Selected, $isDaily")
+                    1 -> Log.e("TAG", "Special Selected, $isDaily")
                 }
                 moveIndicator(positionValue)
                 _binding.viewPager.postDelayed({
@@ -63,15 +62,15 @@ class ListFragment : Fragment() {
 
         TabLayoutMediator(_binding.tabLayout, _binding.viewPager) {
             _, position -> moveIndicator(position)
-            Log.e("TAG", "Something Slided")
+            Log.e("TAG", "Something Slided, $isDaily")
         }.attach()
 
         _binding.txtIndicatorSpecial.setOnClickListener {
-            Log.e("TAG", "Special Clicked")
+            Log.e("TAG", "Special Clicked, $isDaily")
             moveIndicator(1)
         }
         _binding.txtIndicatorDaily.setOnClickListener {
-            Log.e("TAG", "Daily Clicked")
+            Log.e("TAG", "Daily Clicked, $isDaily")
             moveIndicator(0)
         }
 
