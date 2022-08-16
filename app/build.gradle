@@ -79,4 +79,6 @@ dependencies {
     // expanding bottom sheets
     implementation 'com.google.android.material:material:1.2.0-alpha02'
 
+    // pending intent version solve
+
 }
