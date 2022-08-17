@@ -106,4 +106,9 @@ class InfoSpellActivity : AppCompatActivity() {
         finish()
         overridePendingTransition(R.anim.translate_none, R.anim.translate_none)
     }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        overridePendingTransition(R.anim.translate_none,R.anim.translate_none)
+    }
 }

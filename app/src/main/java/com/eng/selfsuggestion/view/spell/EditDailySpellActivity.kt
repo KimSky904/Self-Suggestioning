@@ -48,7 +48,9 @@ class EditDailySpellActivity : AppCompatActivity() {
             finish()
             overridePendingTransition(R.anim.translate_none, R.anim.translate_none)
         }
+    }
 
-
+    override fun onBackPressed() {
+        return
     }
 }

@@ -30,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent="0.3" />
+            app:layout_constraintGuide_percent="0.35" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_bottom"
@@ -73,7 +73,7 @@
 
 
         <TextView
-            android:text="Welcome Back,\n User Name"
+            android:text="Your Mind Spells,\n Will Come True"
             style="@style/TitleText"
             app:layout_constraintLeft_toLeftOf="@id/guideline_left"
             app:layout_constraintTop_toTopOf="parent"

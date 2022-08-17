@@ -82,4 +82,8 @@ class EditSpecialSpellActivity : AppCompatActivity() {
         }
 
     }
+
+    override fun onBackPressed() {
+        return
+    }
 }

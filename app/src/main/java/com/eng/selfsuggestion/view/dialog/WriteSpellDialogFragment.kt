@@ -37,8 +37,10 @@ class WriteSpellDialogFragment : DialogFragment() {
         var daily : RoutineModel? = null
 
         docId?.let {
-            routineRef.getRoutine(it).observe(requireActivity(), {
-                daily = it
+            routineRef.getRoutine(it).observe(requireActivity(), { result ->
+                daily = result
+                _binding.txtSpell.text = result.content
+                _binding.edittxtSpell.hint = result.content
             })
         }
 
